@@ -1,7 +1,5 @@
 ﻿using MatchdayMadness2.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 
 
 namespace MatchdayMadness2.Controllers
@@ -58,10 +56,11 @@ namespace MatchdayMadness2.Controllers
                     table1.LeagueName = tableNewData.LeagueName;
                     table1.Teamsid = tableNewData.Teamsid;
                     table1.Standings = tableNewData.Standings;
-                }else 
+                }
+                else
                 {
                     return View();
-                } 
+                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -86,7 +85,7 @@ namespace MatchdayMadness2.Controllers
             try
             {
                 var table1 = table.Find(x => x.id == id);
-                if (table1 != null) 
+                if (table1 != null)
                     table.Remove(table1);
                 return RedirectToAction(nameof(Index));
             }

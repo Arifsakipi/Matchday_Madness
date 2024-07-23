@@ -60,7 +60,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Events", (string)null);
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Favorites", b =>
@@ -88,7 +88,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Userid");
 
-                    b.ToTable("Favorites", (string)null);
+                    b.ToTable("Favorites");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.LiveCommentary", b =>
@@ -117,7 +117,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Matchesid");
 
-                    b.ToTable("LiveCommentary", (string)null);
+                    b.ToTable("LiveCommentary");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.LiveMatchUpdates", b =>
@@ -149,7 +149,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Notificationsid");
 
-                    b.ToTable("LiveMatchUpdates", (string)null);
+                    b.ToTable("LiveMatchUpdates");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Matches", b =>
@@ -192,7 +192,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Teamsid");
 
-                    b.ToTable("Matches", (string)null);
+                    b.ToTable("Matches");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Notifications", b =>
@@ -224,7 +224,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Userid");
 
-                    b.ToTable("Notifications", (string)null);
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Players", b =>
@@ -253,7 +253,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Teamsid");
 
-                    b.ToTable("Players", (string)null);
+                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Results", b =>
@@ -287,7 +287,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Matchesid");
 
-                    b.ToTable("Results", (string)null);
+                    b.ToTable("Results");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Standings", b =>
@@ -326,7 +326,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Standings", (string)null);
+                    b.ToTable("Standings");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Table", b =>
@@ -352,7 +352,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Teamsid");
 
-                    b.ToTable("Tables", (string)null);
+                    b.ToTable("Tables");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Teams", b =>
@@ -392,7 +392,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Teams", (string)null);
+                    b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.User", b =>
@@ -420,7 +420,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Favorites", b =>
