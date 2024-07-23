@@ -1,0 +1,49 @@
+﻿@model IEnumerable<MatchdayMadness2.Models.LiveCommentary>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Commentator)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescriptiveText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RealTimeUpdates)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.Commentator)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptiveText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RealTimeUpdates)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<MatchdayMadness2.Models.Events>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Goals)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Shots)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YellowCards)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RedCards)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fouls)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Substitutions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Corners)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FreeKicks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Possession)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Goals)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Shots)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YellowCards)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RedCards)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fouls)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Substitutions)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Corners)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FreeKicks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Possession)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
