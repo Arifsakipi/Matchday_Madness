@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MatchdayMadness2.Models
@@ -12,9 +13,11 @@ namespace MatchdayMadness2.Models
         public string Status { get; set; }
         
         [ForeignKey("HomeTeam")]
+        [DisplayName("Home Team")]
         public int HomeTeamid { get; set; }
         
         [ForeignKey("AwayTeam")]
+        [DisplayName("Away Team")]
         public int AwayTeamid { get; set; }
         public string Result { get; set; }
 
