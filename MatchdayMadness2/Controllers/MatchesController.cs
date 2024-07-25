@@ -1,6 +1,8 @@
 ﻿using MatchdayMadness2.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace MatchdayMadness2.Controllers
 {
@@ -15,20 +17,22 @@ namespace MatchdayMadness2.Controllers
         // GET: MatchesController
         public ActionResult Index()
         {
-            matches = _db.Matches.ToList();
+            matches = _db.Matches.Include(x =>x.HomeTeam).Include(x=>x.AwayTeam).ToList();
             return View(matches);
         }
 
         // GET: MatchesController/Details/5
         public ActionResult Details(int id)
         {
-            var match = _db.Matches.Where(x=>x.id.Equals(id)).SingleOrDefault();
+            var match = _db.Matches.Include(x => x.HomeTeam).Include(x => x.AwayTeam).Where(x=>x.id.Equals(id)).SingleOrDefault();
             return View(match);
         }
 
         // GET: MatchesController/Create
         public ActionResult Create()
         {
+            ViewBag.HomeTeam = new SelectList(_db.Teams, "id", "Name");
+            ViewBag.AwayTeam = new SelectList(_db.Teams, "id", "Name");
             return View();
         }
 
@@ -40,6 +44,8 @@ namespace MatchdayMadness2.Controllers
             {
                 _db.Matches.Add(newMatches);
                 _db.SaveChanges();
+                ViewBag.HomeTeam = new SelectList(_db.Teams, "id", "Name", newMatches.HomeTeamid);
+                ViewBag.AwayTeam = new SelectList(_db.Teams, "id", "Name", newMatches.AwayTeamid);
                 return RedirectToAction("Index");
             }
         }
@@ -48,6 +54,8 @@ namespace MatchdayMadness2.Controllers
         public ActionResult Edit(int id)
         {
             var matches1 = _db.Matches.Find(id);
+            ViewBag.HomeTeam = new SelectList(_db.Teams, "id", "Name");
+            ViewBag.AwayTeam = new SelectList(_db.Teams, "id", "Name");
             return View(matches1);
         }
 
@@ -59,6 +67,8 @@ namespace MatchdayMadness2.Controllers
             try
             {
                 var matches1 = _db.Matches.Find(matchesNewData.id);
+                ViewBag.HomeTeam = new SelectList(_db.Teams, "id", "Name", matchesNewData.HomeTeamid);
+                ViewBag.AwayTeam = new SelectList(_db.Teams, "id", "Name", matchesNewData.AwayTeamid);
                 if (matches1 != null)
                 {
                     matches1.Stadium = matchesNewData.Stadium;
