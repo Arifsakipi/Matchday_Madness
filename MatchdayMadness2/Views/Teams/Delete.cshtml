@@ -74,18 +74,7 @@
         </dd>
         </dd>
     </dl>
-    
-    <form asp-action="ExecuteDelete">
-        @Html.HiddenFor(x => x.id)
-        @Html.HiddenFor(x => x.Name)
-        @Html.HiddenFor(x => x.League)
-        @Html.HiddenFor(x => x.Coach)
-        @Html.HiddenFor(x => x.Stadium)
-        @Html.HiddenFor(x => x.Formation)
-        @Html.HiddenFor(x => x.MatchesPlayed)
-        @Html.HiddenFor(x => x.Wins)
-        @Html.HiddenFor(x => x.Draws)
-        @Html.HiddenFor(x => x.Loses)
+    <form asp-action="ExecuteDelete" asp-route-id="@Model.id">
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

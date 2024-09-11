@@ -110,7 +110,7 @@ namespace MatchdayMadness2.Controllers
                 var matches1 = _db.Matches.Find(id);
                 if (matches1 != null)
                 {
-                    matches.Remove(matches1);
+                    _db.Matches.Remove(matches1);
                 }
                 _db.SaveChanges();
                 return RedirectToAction(nameof(Index));
