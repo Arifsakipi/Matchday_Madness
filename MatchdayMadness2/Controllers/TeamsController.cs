@@ -103,7 +103,7 @@ namespace MatchdayMadness2.Controllers
             }
             catch
             {
-                return View();
+                return View("Index");
             }
         }
     }

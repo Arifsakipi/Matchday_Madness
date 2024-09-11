@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel - MatchdayMadness2</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/admincss.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/admin-logo.png" alt="Admin Logo" width="30" height="30" class="d-inline-block align-top" />
+                    MatchdayMadness Admin
+                </a>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-speedometer2"></i>
+                                Back to home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="User" asp-action="Index">
+                                <i class="bi bi-people"></i>
+                                Manage Users
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Teams" asp-action="Index">
+                                <i class="bi bi-people-fill"></i>
+                                Manage Teams
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Matches" asp-action="Index">
+                                <i class="bi bi-calendar-check"></i>
+                                Manage Matches
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Players" asp-action="Index">
+                                <i class="bi bi-file-earmark-text"></i>
+                                Manage Players
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Standings" asp-action="Index">
+                                <i class="bi bi-gear"></i>
+                                Manage Standings
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Events" asp-action="Index">
+                                <i class="bi bi-calendar-event"></i>
+                                Manage Events
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Favorites" asp-action="Index">
+                                <i class="bi bi-heart-fill"></i>
+                                Manage Favourites
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="LiveCommentary" asp-action="Index">
+                                <i class="bi bi-chat-text"></i>
+                                Manage Live Commentary
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="LiveMatchUpdates" asp-action="Index">
+                                <i class="bi bi-broadcast-pin"></i>
+                                Manage Live Match Updates
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Notifications" asp-action="Index">
+                                <i class="bi bi-bell"></i>
+                                Manage Notifications
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Results" asp-action="Index">
+                                <i class="bi bi-graph-up"></i>
+                                Manage Results
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Table" asp-action="Index">
+                                <i class="bi bi-table"></i>
+                                Manage Table
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">&copy; 2024 - MatchdayMadness Admin Panel - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></span>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

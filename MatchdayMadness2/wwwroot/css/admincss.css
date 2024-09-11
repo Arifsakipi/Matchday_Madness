@@ -1,0 +1,121 @@
+﻿/* General Layout Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    padding: 1rem;
+}
+
+.sidebar {
+    height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+    .sidebar .nav-link {
+        font-size: 1rem;
+        padding: 15px;
+        color: #333;
+        transition: color 0.2s ease;
+    }
+
+        .sidebar .nav-link:hover {
+            background-color: #e9ecef;
+            color: #000;
+        }
+
+        .sidebar .nav-link.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+/* Admin-specific content area */
+main {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+    .table th, .table td {
+        padding: 15px;
+        border: 1px solid #dee2e6;
+    }
+
+    .table th {
+        background-color: #343a40;
+        color: white;
+        text-align: left;
+    }
+
+    .table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .table tr:hover {
+        background-color: #e9ecef;
+        cursor: pointer;
+    }
+
+    .table td {
+        text-align: left;
+    }
+
+        .table td a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+            .table td a:hover {
+                text-decoration: underline;
+            }
+
+/* Buttons inside tables */
+.table-action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+    .table-action-buttons a {
+        padding: 5px 10px;
+        font-size: 0.9rem;
+        border: 1px solid #007bff;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #007bff;
+    }
+
+        .table-action-buttons a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+/* Footer */
+footer.footer {
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 1rem;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Admin-specific Styling */
+.navbar-text {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #eaeaea;
+}
+
+h1.h2 {
+    color: #343a40;
+}

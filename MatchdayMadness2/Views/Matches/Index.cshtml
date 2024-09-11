@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "_LayoutAdmin";
 }
 
 <h1>Index</h1>
@@ -54,11 +55,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Result)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.id })
-            </td>
+                <td class="table-action-buttons">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary" })
+                </td>
         </tr>
 }
     </tbody>

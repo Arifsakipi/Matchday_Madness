@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Players";
+    Layout = "_LayoutAdmin";
 }
 
 <h1>Index</h1>
@@ -36,11 +37,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Age)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            </td>
+                <td class="table-action-buttons">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-sm btn-outline-primary" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-sm btn-outline-primary" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-sm btn-outline-primary" })
+                </td>
         </tr>
 }
     </tbody>
