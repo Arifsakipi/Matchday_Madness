@@ -83,8 +83,8 @@ namespace MatchdayMadness2.Controllers
         // GET: UserController/Delete/5
         public ActionResult Delete(int id)
         {
-            var user = _db.Users.Find(id);
-            return View(user);
+            var user1 = _db.Users.Find(id);
+            return View(user1);
         }
 
         // POST: UserController/Delete/5
@@ -94,12 +94,12 @@ namespace MatchdayMadness2.Controllers
         {
             try
             {
-                var user = _db.Users.Find(id);
-                if (user != null)
-                    users.Remove(user);
+                var user1 = _db.Users.Find(id);
+                _db.Users.Remove(user1);
                 _db.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
+
             catch
             {
                 return View();
