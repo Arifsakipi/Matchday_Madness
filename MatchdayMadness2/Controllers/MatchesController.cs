@@ -17,14 +17,15 @@ namespace MatchdayMadness2.Controllers
         // GET: MatchesController
         public ActionResult Index()
         {
-            matches = _db.Matches.Include(x =>x.HomeTeam).Include(x=>x.AwayTeam).ToList();
+            matches = _db.Matches.
+                Include(x=>x.HomeTeam).Include(x=>x.AwayTeam).ToList();
             return View(matches);
         }
 
         // GET: MatchesController/Details/5
         public ActionResult Details(int id)
         {
-            var match = _db.Matches.Include(x => x.HomeTeam).Include(x => x.AwayTeam).Where(x=>x.id.Equals(id)).SingleOrDefault();
+            var match = _db.Matches.Include(x => x.HomeTeam).Include(x => x.AwayTeam).Where(x => x.id.Equals(id)).SingleOrDefault();
             return View(match);
         }
 
@@ -32,7 +33,7 @@ namespace MatchdayMadness2.Controllers
         public ActionResult Create()
         {
             ViewBag.HomeTeam = new SelectList(_db.Teams, "id", "Name");
-            ViewBag.AwayTeam = new SelectList(_db.Teams, "id", "Name");
+            ViewBag.AwayTeam=new SelectList(_db.Teams,"id","Name");
             return View();
         }
 
@@ -44,8 +45,8 @@ namespace MatchdayMadness2.Controllers
             {
                 _db.Matches.Add(newMatches);
                 _db.SaveChanges();
-                ViewBag.HomeTeam = new SelectList(_db.Teams, "id", "Name", newMatches.HomeTeamid);
-                ViewBag.AwayTeam = new SelectList(_db.Teams, "id", "Name", newMatches.AwayTeamid);
+                ViewBag.HomeTeam=new SelectList(_db.Teams,"id","Name",newMatches.HomeTeamid);
+                ViewBag.AwayTeam=new SelectList(_db.Teams,"id","Name",newMatches.AwayTeamid);
                 return RedirectToAction("Index");
             }
         }
@@ -102,13 +103,15 @@ namespace MatchdayMadness2.Controllers
         // POST: MatchesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EXecuteDelete(int id)
+        public ActionResult ExecuteDelete(int id)
         {
             try
             {
                 var matches1 = _db.Matches.Find(id);
                 if (matches1 != null)
+                {
                     matches.Remove(matches1);
+                }
                 _db.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }

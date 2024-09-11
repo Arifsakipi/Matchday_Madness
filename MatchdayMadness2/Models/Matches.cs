@@ -13,11 +13,11 @@ namespace MatchdayMadness2.Models
         public string Status { get; set; }
         
         [ForeignKey("HomeTeam")]
-        [DisplayName("HomeTeam")]
+        [DisplayName("Home Team")]
         public int HomeTeamid { get; set; }
         
         [ForeignKey("AwayTeam")]
-        [DisplayName("AwayTeam")]
+        [DisplayName("Away Team")]
         public int AwayTeamid { get; set; }
         public string Result { get; set; }
 
