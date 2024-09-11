@@ -95,8 +95,8 @@ namespace MatchdayMadness2.Controllers
             try
             {
                 var user = _db.Users.Find(id);
-                if (user != null)
-                    users.Remove(user);
+                if(user!=null)
+                    _db.Users.Remove(user);
                 _db.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }

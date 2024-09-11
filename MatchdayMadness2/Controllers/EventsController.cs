@@ -1,22 +1,30 @@
 ﻿using MatchdayMadness2.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MatchdayMadness2.Controllers
 {
     public class EventsController : Controller
     {
-        private static List<Events> events = new List<Events>();
+        private static DB _db;
+        public EventsController(DB db)
+        {
+            _db= db;
+        }
+        private static List<Events> events= new List<Events>();
         // GET: EventsController
         public ActionResult Index()
         {
+            events=_db.Events.ToList();
             return View(events);
         }
 
         // GET: EventsController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+           var e1=_db.Events.Where(x=>x.id==id).SingleOrDefault();
+            return View(e1);    
         }
 
         // GET: EventsController/Create
@@ -31,7 +39,8 @@ namespace MatchdayMadness2.Controllers
         public ActionResult Create(Events newEvent)
         {          
             {
-                events.Add(newEvent);
+                _db.Events.Add(newEvent);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
         }
@@ -39,7 +48,7 @@ namespace MatchdayMadness2.Controllers
         // GET: EventsController/Edit/5
         public ActionResult Edit(int id)
         {
-            var event1 = events.Find(x => x.id == id);  
+            var event1 = _db.Events.Find(id);  
             return View(event1);
         }
 
@@ -50,9 +59,8 @@ namespace MatchdayMadness2.Controllers
         {
             try
             {
-                var event1 = events.Find(x => x.id == eventsNewData.id);
-                if (event1 != null) 
-                {
+                 var event1=_db.Events.Find(eventsNewData.id);  
+                
                     event1.Goals = eventsNewData.Goals; 
                     event1.Shots = eventsNewData.Shots;
                     event1.YellowCards = eventsNewData.YellowCards;
@@ -62,10 +70,8 @@ namespace MatchdayMadness2.Controllers
                     event1.Corners = eventsNewData.Corners;
                     event1.FreeKicks = eventsNewData.FreeKicks;
                     event1.Possession = eventsNewData.Possession;
-                }else
-                {
-                    return View();
-                }
+                 _db.SaveChanges(); 
+                
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -77,7 +83,7 @@ namespace MatchdayMadness2.Controllers
         // GET: EventsController/Delete/5
         public ActionResult Delete(int id)
         {
-            var event1 = events.Find(x => x.id == id);
+            var event1 = _db.Events.Find(id);
             return View(event1);
         }
 
@@ -88,9 +94,9 @@ namespace MatchdayMadness2.Controllers
         {
             try
             {
-                var event1 = events.Find(x => x.id == id);
-                if (event1 != null) 
-                    events.Remove(event1);
+                var event1 = _db.Events.Find(id);
+                _db.Events.Remove(event1);
+                _db.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
