@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MatchdayMadness2.Models
 {
-    public class Matches
+   public class Matches
     {
         [Key]
         public int id { get; set; }

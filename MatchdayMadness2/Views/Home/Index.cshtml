@@ -24,7 +24,8 @@
                                     <h5 class="card-title">@match.HomeTeam.Name vs @match.AwayTeam.Name</h5>
                                     <p class="card-text">
                                         <strong>Date:</strong> @match.Date.ToString("dd MMMM, yyyy")<br />
-                                        <strong>Stadium:</strong> @match.Stadium
+                                        <strong>Stadium:</strong> @match.Stadium<br/>
+                                        <strong>Status: </strong>@match.Status
                                     </p>
                                     <a href="@Url.Action("Details", "Matches", new { id = match.id })" class="btn btn-primary">Match Details</a>
                                 </div>
