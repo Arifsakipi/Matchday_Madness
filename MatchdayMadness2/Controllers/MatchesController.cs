@@ -34,7 +34,6 @@ namespace MatchdayMadness2.Controllers
         {
             ViewBag.HomeTeam = new SelectList(_db.Teams, "id", "Name");
             ViewBag.AwayTeam=new SelectList(_db.Teams,"id","Name");
-            var stadiums = _db.Teams.Select(x => new {x.Stadium, x.id}).ToList();
             ViewBag.Stadiums = new SelectList(_db.Teams, "Stadium","Stadium");
             ViewBag.Status = new SelectList(new List<string> { "Ongoing", "Upcoming", "Finished"});
 
@@ -51,7 +50,6 @@ namespace MatchdayMadness2.Controllers
                 _db.SaveChanges();
                 ViewBag.HomeTeam=new SelectList(_db.Teams,"id","Name",newMatches.HomeTeamid);
                 ViewBag.AwayTeam=new SelectList(_db.Teams,"id","Name",newMatches.AwayTeamid);
-                var stadiums = _db.Teams.Select(x => new { x.Stadium, x.id }).ToList();
                 ViewBag.Stadiums = new SelectList(_db.Teams, "Stadium","Stadium");
                 ViewBag.Status = new SelectList(new List<string> { "Ongoing", "Upcoming", "Finished" });
 
@@ -65,7 +63,6 @@ namespace MatchdayMadness2.Controllers
             var matches1 = _db.Matches.Find(id);
             ViewBag.HomeTeam = new SelectList(_db.Teams, "id", "Name");
             ViewBag.AwayTeam = new SelectList(_db.Teams, "id", "Name");
-            var stadiums = _db.Teams.Select(x => new { x.Stadium, x.id }).ToList();
             ViewBag.Stadiums = new SelectList(_db.Teams, "Stadium", "Stadium");
             ViewBag.Status = new SelectList(new List<string> { "Ongoing", "Upcoming", "Finished" });
 
@@ -82,7 +79,6 @@ namespace MatchdayMadness2.Controllers
                 var matches1 = _db.Matches.Find(matchesNewData.id);
                 ViewBag.HomeTeam = new SelectList(_db.Teams, "id", "Name", matchesNewData.HomeTeamid);
                 ViewBag.AwayTeam = new SelectList(_db.Teams, "id", "Name", matchesNewData.AwayTeamid);
-                var stadiums = _db.Teams.Select(x => new { x.Stadium, x.id }).ToList();
                 ViewBag.Stadiums = new SelectList(_db.Teams, "Stadium", "Stadium");
                 ViewBag.Status = new SelectList(new List<string> { "Ongoing", "Upcoming", "Finished" });
 
