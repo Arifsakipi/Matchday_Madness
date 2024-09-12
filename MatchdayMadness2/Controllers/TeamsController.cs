@@ -1,12 +1,13 @@
 ﻿using MatchdayMadness2.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace MatchdayMadness2.Controllers
 {
     public class TeamsController : Controller
     {
-       private static List<Teams> teams = new List<Teams>();
+        private List<Teams> teams = new List<Teams>();
         private static DB _db;
         public TeamsController(DB db)
         {
@@ -97,10 +98,15 @@ namespace MatchdayMadness2.Controllers
             {
                 var team1 = _db.Teams.Find(id);
                 if (team1 != null)
+                {
                     _db.Teams.Remove(team1);
+                }
                 _db.SaveChanges();
                 return RedirectToAction(nameof(Index));
+                
             }
+            
+           
             catch
             {
                 return View("Index");

@@ -26,7 +26,7 @@ namespace MatchdayMadness2.Models
 
         public virtual Teams HomeTeam { get; set; }
         public virtual Teams AwayTeam { get; set; }
-      
+        
 
 
 

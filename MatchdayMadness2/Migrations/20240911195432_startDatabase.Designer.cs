@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchdayMadness2.Migrations
 {
     [DbContext(typeof(DB))]
-    [Migration("20240725145043_initial-migration")]
-    partial class initialmigration
+    [Migration("20240911195432_startDatabase")]
+    partial class startDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
