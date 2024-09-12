@@ -14,33 +14,34 @@
     <h2 class="mb-4">Latest Matches</h2>
 
     <div class="row">
-        @if (Model != null && Model.Any())
+        @if (Model != null)
         {
             foreach (var match in Model)
             {
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">@match.HomeTeam.Name vs @match.AwayTeam.Name</h5>
-                            <p class="card-text">
-                                <strong>Date:</strong> @match.Date.ToString("MMMM dd, yyyy")<br />
-                                <strong>Stadium:</strong> @match.Stadium
-                            </p>
-                            <a href="@Url.Action("Details", "Matches", new { id = match.id })" class="btn btn-primary">Match Details</a>
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">@match.HomeTeam.Name vs @match.AwayTeam.Name</h5>
+                                    <p class="card-text">
+                                        <strong>Date:</strong> @match.Date.ToString("dd MMMM, yyyy")<br />
+                                        <strong>Stadium:</strong> @match.Stadium<br/>
+                                        <strong>Status: </strong>@match.Status
+                                    </p>
+                                    <a href="@Url.Action("Details", "Matches", new { id = match.id })" class="btn btn-primary">Match Details</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
             }
         }
         else
         {
-            <div class="col">
-                <p>No matches available at the moment.</p>
-            </div>
+                <div class="col">
+                    <p>No matches available at the moment.</p>
+                </div>
         }
     </div>
 </div>
-</div>
+
 
 <script>
     var container = document.getElementsByClassName("container");
