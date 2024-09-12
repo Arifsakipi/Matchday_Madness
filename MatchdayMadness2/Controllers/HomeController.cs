@@ -10,23 +10,18 @@ namespace MatchdayMadness2.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly DB _db;
+        private static DB _db;
 
         public HomeController(ILogger<HomeController> logger, DB db)
         {
             _logger = logger;
-            _db = db;
+            _db = db; //kjo quhet dependency injection design pattern
         }
 
         public IActionResult Index()
         {
-            // Fetch the latest matches to display on the homepage
-            var matches = _db.Matches
-                .Include(m => m.HomeTeam)
-                .Include(m => m.AwayTeam)
-                .OrderByDescending(m => m.Date)
-                .Take(5) // Display only the 5 most recent matches
-                .ToList();
+            
+            var matches = _db.Matches.Include(x => x.HomeTeam).Include(x => x.AwayTeam).OrderByDescending(x => x.Date).Take(5).ToList();
 
             return View(matches);
         }
