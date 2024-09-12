@@ -45,12 +45,12 @@
     </dl>
     
     <form asp-action="ExecuteDelete">
-        @Html.HiddenFor(x => x.id);
-        @Html.HiddenFor(x => x.username);
-        @Html.HiddenFor(x => x.email);
-        @Html.HiddenFor(x => x.password);
-        @Html.HiddenFor(x => x.phoneNumber);b 
-        @Html.HiddenFor(x => x.dateOfBirth);
+        @Html.HiddenFor(x => x.id)
+        @Html.HiddenFor(x => x.username)
+        @Html.HiddenFor(x => x.email)
+        @Html.HiddenFor(x => x.password)
+        @Html.HiddenFor(x => x.phoneNumber)
+        @Html.HiddenFor(x => x.dateOfBirth)
         <input type="hidden" asp-for="id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>

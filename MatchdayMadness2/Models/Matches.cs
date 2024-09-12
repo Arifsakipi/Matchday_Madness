@@ -20,14 +20,13 @@ namespace MatchdayMadness2.Models
         [DisplayName("Away Team")]
         public int AwayTeamid { get; set; }
         public string Result { get; set; }
+        
 
-        
-        
-        
 
 
         public virtual Teams HomeTeam { get; set; }
         public virtual Teams AwayTeam { get; set; }
+      
 
 
 

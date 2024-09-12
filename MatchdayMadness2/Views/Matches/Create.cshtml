@@ -21,9 +21,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="Stadium" class="control-label"></label>
-                <input asp-for="Stadium" class="form-control" />
+                <select asp-for="Stadium" class="form-control" asp-items="ViewBag.Stadiums"></select>
                 <span asp-validation-for="Stadium" class="text-danger"></span>
             </div>
+            @* <div class="form-group">
+                <label asp-for="Stadium" class="control-label"></label>
+                <input asp-for="Stadium" class="form-control" />
+                <span asp-validation-for="Stadium" class="text-danger"></span>
+            </div> *@
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
                 <input asp-for="Status" class="form-control" />
