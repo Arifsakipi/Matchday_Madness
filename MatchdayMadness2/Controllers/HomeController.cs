@@ -20,12 +20,12 @@ namespace MatchdayMadness2.Controllers
 
         public IActionResult Index()
         {
-            // Fetch the latest matches to display on the homepage
+            // Mwrri ndeshjet me te fundit dhe shfaqi ne Home Page             
             var matches = _db.Matches
                 .Include(m => m.HomeTeam)
                 .Include(m => m.AwayTeam)
                 .OrderByDescending(m => m.Date)
-                .Take(5) // Display only the 5 most recent matches
+                .Take(5) // Shfaq vetem 5 ndeshjet e fundit
                 .ToList();
 
             return View(matches);
