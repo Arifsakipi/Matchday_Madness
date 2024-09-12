@@ -34,6 +34,9 @@ namespace MatchdayMadness2.Controllers
         {
             ViewBag.HomeTeam = new SelectList(_db.Teams, "id", "Name");
             ViewBag.AwayTeam=new SelectList(_db.Teams,"id","Name");
+            ViewBag.Stadiums = new SelectList(_db.Teams, "Stadium","Stadium");
+            ViewBag.Status = new SelectList(new List<string> { "Ongoing", "Upcoming", "Finished"});
+
             return View();
         }
 
@@ -47,6 +50,9 @@ namespace MatchdayMadness2.Controllers
                 _db.SaveChanges();
                 ViewBag.HomeTeam=new SelectList(_db.Teams,"id","Name",newMatches.HomeTeamid);
                 ViewBag.AwayTeam=new SelectList(_db.Teams,"id","Name",newMatches.AwayTeamid);
+                ViewBag.Stadiums = new SelectList(_db.Teams, "Stadium","Stadium");
+                ViewBag.Status = new SelectList(new List<string> { "Ongoing", "Upcoming", "Finished" });
+
                 return RedirectToAction("Index");
             }
         }
@@ -57,6 +63,9 @@ namespace MatchdayMadness2.Controllers
             var matches1 = _db.Matches.Find(id);
             ViewBag.HomeTeam = new SelectList(_db.Teams, "id", "Name");
             ViewBag.AwayTeam = new SelectList(_db.Teams, "id", "Name");
+            ViewBag.Stadiums = new SelectList(_db.Teams, "Stadium", "Stadium");
+            ViewBag.Status = new SelectList(new List<string> { "Ongoing", "Upcoming", "Finished" });
+
             return View(matches1);
         }
 
@@ -70,6 +79,9 @@ namespace MatchdayMadness2.Controllers
                 var matches1 = _db.Matches.Find(matchesNewData.id);
                 ViewBag.HomeTeam = new SelectList(_db.Teams, "id", "Name", matchesNewData.HomeTeamid);
                 ViewBag.AwayTeam = new SelectList(_db.Teams, "id", "Name", matchesNewData.AwayTeamid);
+                ViewBag.Stadiums = new SelectList(_db.Teams, "Stadium", "Stadium");
+                ViewBag.Status = new SelectList(new List<string> { "Ongoing", "Upcoming", "Finished" });
+
                 if (matches1 != null)
                 {
                     matches1.Stadium = matchesNewData.Stadium;
@@ -78,6 +90,8 @@ namespace MatchdayMadness2.Controllers
                     matches1.Status = matchesNewData.Status;
                     matches1.HomeTeamid = matchesNewData.HomeTeamid;
                     matches1.AwayTeamid = matchesNewData.AwayTeamid;
+                    matches1.Stadium = matchesNewData.Stadium;
+                   
                     _db.SaveChanges();
                 }
                 else

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MatchdayMadness2.Models
 {
-    public class Matches
+   public class Matches
     {
         [Key]
         public int id { get; set; }
@@ -20,14 +20,13 @@ namespace MatchdayMadness2.Models
         [DisplayName("Away Team")]
         public int AwayTeamid { get; set; }
         public string Result { get; set; }
+        
 
-        
-        
-        
 
 
         public virtual Teams HomeTeam { get; set; }
         public virtual Teams AwayTeam { get; set; }
+        
 
 
 

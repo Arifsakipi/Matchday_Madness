@@ -1,23 +1,72 @@
-﻿@{
+﻿@model List<MatchdayMadness2.Models.Matches>
+
+@{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Matchday Madness</h1>
+    <p>Catch the latest match details below!</p>
 </div>
-<div class="container">
 
+<div class="container mt-5">
+    <h2 class="mb-4">Latest Matches</h2>
 
+    <div class="row">
+        @if (Model != null)
+        {
+            foreach (var match in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@match.HomeTeam.Name vs @match.AwayTeam.Name</h5>
+                            <p class="card-text">
+                                <strong>Date:</strong> <span class="match-date" data-matchdate="@match.Date.ToString("yyyy-MM-ddTHH:mm:ss")">@match.Date.ToString("yyyy-MM-dd HH:mm")</span><br />
+                                <strong>Stadium:</strong> @match.Stadium<br />
+                                <strong>Status: </strong> <span class="match-status">@match.Status</span>
+                            </p>
+                            <a href="@Url.Action("Details", "Matches", new { id = match.id })" class="btn btn-primary">Match Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col">
+                <p>No matches available at the moment.</p>
+            </div>
+        }
+    </div>
 </div>
+
 
 <script>
-    var container = document.getElementsByClassName("container");
+    function updateMatchStatuses() {
 
-    var newRow = document.createElement("div");
-    newRow.textContent="Ketu do te vendosen ndeshjet me te reja!"
+        const now = new Date();
 
-    container[0].appendChild(newRow);
+       
+        document.querySelectorAll('.card').forEach(function (card) {
+            const matchDateElement = card.querySelector('.match-date');
+            const matchStatusElement = card.querySelector('.match-status');
+            const matchDate = new Date(matchDateElement.dataset.matchdate);  
 
+            
+            if (matchDate > now) {
+                matchStatusElement.textContent = "Upcoming";
+            } else if (matchDate < now && (now - matchDate) <= (90 * 60 * 1000)) { 
+                matchStatusElement.textContent = "Ongoing";
+            } else {
+                matchStatusElement.textContent = "Finished";
+            }
+        });
+
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        updateMatchStatuses(); 
+        setInterval(updateMatchStatuses, 500); 
+    });
 </script>
