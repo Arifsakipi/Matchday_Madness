@@ -94,3 +94,22 @@ footer {
 .text-center{
     font-family:Georgia, 'Times New Roman', Times, serif
 }
+/* Add this to your CSS file or <style> tag */
+.dropdown-menu {
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    background-color: #fff;
+    z-index: 1000;
+}
+
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+    }
+
+
+
