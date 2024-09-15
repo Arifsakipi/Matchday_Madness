@@ -64,6 +64,13 @@
                     </ul>
                 </div>
             </div>
+            <form class="form-inline my-2 my-lg-0 position-relative">
+                <input class="form-control mr-sm-2" type="search" id="search-query" placeholder="Search matches..." aria-label="Search" autocomplete="off">
+                <!-- Dropdown for displaying search results -->
+                <div id="search-results" class="dropdown-menu" style="display: none; width: 100%; max-height: 400px; overflow-y: auto;">
+                    <!-- Results will be dynamically inserted here by JavaScript -->
+                </div>
+            </form>
         </nav>
     </header>
     <div class="container">
@@ -80,6 +87,53 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#search-query').on('input', function () {
+            var query = $(this).val();
+            if (query.length < 3) {
+                $('#search-results').hide();
+                return; // Only show results if query length is at least 3 characters
+            }
+
+            $.ajax({
+                url: '/Matches/Search', // Ensure this is the correct URL
+                type: 'GET',
+                data: { query: query },
+                success: function (response) {
+                    var resultsContainer = $('#search-results');
+                    resultsContainer.empty(); // Clear previous results
+
+                    if (response.length > 0) {
+                        response.forEach(function (match) {
+                            var resultItem = $('<a class="dropdown-item"></a>')
+                                .text(match.homeTeam + ' vs ' + match.awayTeam + ' - ' + match.date)
+                                .attr('href', '/Matches/Details/' + match.id);
+                            resultsContainer.append(resultItem);
+                        });
+                        resultsContainer.show(); // Show dropdown with results
+                    } else {
+                        resultsContainer.append('<a class="dropdown-item" href="#">No matches found</a>');
+                        resultsContainer.show(); // Show dropdown with "no matches" message
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                }
+            });
+        });
+
+        // Hide the dropdown when clicking outside
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('#search-query, #search-results').length) {
+                $('#search-results').hide();
+            }
+        });
+    });
+
+
+</script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
