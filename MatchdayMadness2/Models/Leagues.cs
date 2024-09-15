@@ -9,5 +9,8 @@ namespace MatchdayMadness2.Models
         public int LeagueId { get; set; }
         public string Name { get; set; }
 
+        public virtual ICollection<Teams> Team { get; set; }
+
     }
 }
+ 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchdayMadness2.Migrations
 {
     [DbContext(typeof(DB))]
-    [Migration("20240915013830_added-leagues-to-teams")]
-    partial class addedleaguestoteams
+    [Migration("20240915120900_start")]
+    partial class start
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,14 +109,9 @@ namespace MatchdayMadness2.Migrations
                     b.Property<int?>("Standingsid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Teamsid")
-                        .HasColumnType("int");
-
                     b.HasKey("LeagueId");
 
                     b.HasIndex("Standingsid");
-
-                    b.HasIndex("Teamsid");
 
                     b.ToTable("Leagues");
                 });
@@ -398,7 +393,7 @@ namespace MatchdayMadness2.Migrations
                     b.Property<string>("Formation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Leagueid")
+                    b.Property<int>("LeagueId")
                         .HasColumnType("int");
 
                     b.Property<int?>("Loses")
@@ -417,6 +412,8 @@ namespace MatchdayMadness2.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("id");
+
+                    b.HasIndex("LeagueId");
 
                     b.ToTable("Teams");
                 });
@@ -490,10 +487,6 @@ namespace MatchdayMadness2.Migrations
                     b.HasOne("MatchdayMadness2.Models.Standings", null)
                         .WithMany("Leagues")
                         .HasForeignKey("Standingsid");
-
-                    b.HasOne("MatchdayMadness2.Models.Teams", null)
-                        .WithMany("Leagues")
-                        .HasForeignKey("Teamsid");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.LiveCommentary", b =>
@@ -581,6 +574,17 @@ namespace MatchdayMadness2.Migrations
                     b.Navigation("Team");
                 });
 
+            modelBuilder.Entity("MatchdayMadness2.Models.Teams", b =>
+                {
+                    b.HasOne("MatchdayMadness2.Models.Leagues", "League")
+                        .WithMany()
+                        .HasForeignKey("LeagueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("League");
+                });
+
             modelBuilder.Entity("StandingsTeams", b =>
                 {
                     b.HasOne("MatchdayMadness2.Models.Standings", null)
@@ -627,8 +631,6 @@ namespace MatchdayMadness2.Migrations
                     b.Navigation("Favorites");
 
                     b.Navigation("HomeMatches");
-
-                    b.Navigation("Leagues");
 
                     b.Navigation("Matches");
 

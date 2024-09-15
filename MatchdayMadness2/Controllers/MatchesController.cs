@@ -64,6 +64,7 @@ namespace MatchdayMadness2.Controllers
             ViewBag.AwayTeam=new SelectList(_db.Teams,"id","Name");
             ViewBag.Stadiums = new SelectList(_db.Teams, "Stadium","Stadium");
             ViewBag.Status = new SelectList(new List<string> { "Ongoing", "Upcoming", "Finished"});
+            
 
             return View();
         }

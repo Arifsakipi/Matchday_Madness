@@ -31,7 +31,7 @@ namespace MatchdayMadness2.Controllers
         // GET: TeamsController/Create
         public ActionResult Create()
         {
-            ViewBag.Leagues = new SelectList(_db.Leagues, "LeagueId", "Name");
+            ViewBag.League = new SelectList(_db.Leagues, "LeagueId", "Name");
             return View();
         }
 
@@ -40,6 +40,7 @@ namespace MatchdayMadness2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Teams newTeam)
         {
+            ViewBag.League = new SelectList(_db.Leagues, "LeagueId", "Name", newTeam.LeagueId);
             _db.Teams.Add(newTeam);
             _db.SaveChanges();
             return RedirectToAction("Index");   
@@ -63,7 +64,7 @@ namespace MatchdayMadness2.Controllers
                 if (team1 != null)
                 {
                     team1.Name = teamsNewData.Name;
-                    team1.Leagues = teamsNewData.Leagues;
+                    team1.LeagueId = teamsNewData.LeagueId;
                     team1.Coach = teamsNewData.Coach;
                     team1.MatchesPlayed = teamsNewData.MatchesPlayed;
                     team1.Stadium = teamsNewData.Stadium;

@@ -16,10 +16,13 @@ namespace MatchdayMadness2.Models
         public int? Wins { get; set; }
         public int? Loses { get; set; }
         public int? Draws { get; set; }
+        [ForeignKey("League")]
+        [DisplayName("League")]
+        public int LeagueId { get; set; }
         
 
 
-        public virtual List<Leagues> Leagues { get; set; }
+        public virtual Leagues League { get; set; }
         public virtual List<Players> Players { get; set; } 
         public virtual List<Favorites> Favorites { get; set; } 
         public virtual List<Matches> Matches { get; set; } 
