@@ -60,7 +60,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Events", (string)null);
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Favorites", b =>
@@ -88,7 +88,24 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Userid");
 
-                    b.ToTable("Favorites", (string)null);
+                    b.ToTable("Favorites");
+                });
+
+            modelBuilder.Entity("MatchdayMadness2.Models.League", b =>
+                {
+                    b.Property<int>("LeagueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LeagueId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LeagueId");
+
+                    b.ToTable("League");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.LiveCommentary", b =>
@@ -117,7 +134,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Matchesid");
 
-                    b.ToTable("LiveCommentary", (string)null);
+                    b.ToTable("LiveCommentary");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.LiveMatchUpdates", b =>
@@ -149,7 +166,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Notificationsid");
 
-                    b.ToTable("LiveMatchUpdates", (string)null);
+                    b.ToTable("LiveMatchUpdates");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Matches", b =>
@@ -192,7 +209,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Teamsid");
 
-                    b.ToTable("Matches", (string)null);
+                    b.ToTable("Matches");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Notifications", b =>
@@ -224,7 +241,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Userid");
 
-                    b.ToTable("Notifications", (string)null);
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Players", b =>
@@ -253,7 +270,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Teamsid");
 
-                    b.ToTable("Players", (string)null);
+                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Results", b =>
@@ -287,7 +304,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Matchesid");
 
-                    b.ToTable("Results", (string)null);
+                    b.ToTable("Results");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Standings", b =>
@@ -326,7 +343,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Standings", (string)null);
+                    b.ToTable("Standings");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Table", b =>
@@ -352,7 +369,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasIndex("Teamsid");
 
-                    b.ToTable("Tables", (string)null);
+                    b.ToTable("Tables");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Teams", b =>
@@ -372,8 +389,8 @@ namespace MatchdayMadness2.Migrations
                     b.Property<string>("Formation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("League")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("LeagueId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Loses")
                         .HasColumnType("int");
@@ -392,7 +409,9 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Teams", (string)null);
+                    b.HasIndex("LeagueId");
+
+                    b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.User", b =>
@@ -420,7 +439,7 @@ namespace MatchdayMadness2.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Favorites", b =>
@@ -527,6 +546,22 @@ namespace MatchdayMadness2.Migrations
                         .IsRequired();
 
                     b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("MatchdayMadness2.Models.Teams", b =>
+                {
+                    b.HasOne("MatchdayMadness2.Models.League", "League")
+                        .WithMany("Teams")
+                        .HasForeignKey("LeagueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("League");
+                });
+
+            modelBuilder.Entity("MatchdayMadness2.Models.League", b =>
+                {
+                    b.Navigation("Teams");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Matches", b =>

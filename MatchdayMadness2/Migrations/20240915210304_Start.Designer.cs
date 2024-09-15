@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchdayMadness2.Migrations
 {
     [DbContext(typeof(DB))]
-    [Migration("20240911195432_startDatabase")]
-    partial class startDatabase
+    [Migration("20240915210304_Start")]
+    partial class Start
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,6 +92,23 @@ namespace MatchdayMadness2.Migrations
                     b.HasIndex("Userid");
 
                     b.ToTable("Favorites");
+                });
+
+            modelBuilder.Entity("MatchdayMadness2.Models.League", b =>
+                {
+                    b.Property<int>("LeagueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LeagueId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LeagueId");
+
+                    b.ToTable("League");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.LiveCommentary", b =>
@@ -375,8 +392,8 @@ namespace MatchdayMadness2.Migrations
                     b.Property<string>("Formation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("League")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("LeagueId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Loses")
                         .HasColumnType("int");
@@ -394,6 +411,8 @@ namespace MatchdayMadness2.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("id");
+
+                    b.HasIndex("LeagueId");
 
                     b.ToTable("Teams");
                 });
@@ -530,6 +549,22 @@ namespace MatchdayMadness2.Migrations
                         .IsRequired();
 
                     b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("MatchdayMadness2.Models.Teams", b =>
+                {
+                    b.HasOne("MatchdayMadness2.Models.League", "League")
+                        .WithMany("Teams")
+                        .HasForeignKey("LeagueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("League");
+                });
+
+            modelBuilder.Entity("MatchdayMadness2.Models.League", b =>
+                {
+                    b.Navigation("Teams");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Matches", b =>

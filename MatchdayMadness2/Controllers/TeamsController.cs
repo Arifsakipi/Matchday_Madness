@@ -1,7 +1,9 @@
 ﻿using MatchdayMadness2.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 
 namespace MatchdayMadness2.Controllers
 {
@@ -16,20 +18,23 @@ namespace MatchdayMadness2.Controllers
         // GET: TeamsController
         public ActionResult Index()
         {
-            teams = _db.Teams.ToList();
+            var teams = _db.Teams.Include(x => x.League);
             return View(teams);
         }
 
         // GET: TeamsController/Details/5
         public ActionResult Details(int id)
         {
-            var teams = _db.Teams.Where(x => x.id.Equals(id)).SingleOrDefault();
+            var teams = _db.Teams.Include(x=>x.League).Where(x => x.id.Equals(id)).SingleOrDefault();
             return View(teams);
         }
 
         // GET: TeamsController/Create
         public ActionResult Create()
         {
+            var leagues = _db.League.ToList();
+            var leagueSelectList = new SelectList(leagues, "LeagueId", "Name");
+            ViewBag.league = leagueSelectList; 
             return View();
         }
 
@@ -47,6 +52,9 @@ namespace MatchdayMadness2.Controllers
         public ActionResult Edit(int id)
         {
             var team1 = _db.Teams.Find(id);
+            var league = _db.League.ToList();
+            var leagueSelectList = new SelectList(league, "LeagueId", "Name",team1.LeagueId);
+            ViewBag.league = leagueSelectList;
             return View(team1);
         }
 
@@ -61,7 +69,7 @@ namespace MatchdayMadness2.Controllers
                 if (team1 != null)
                 {
                     team1.Name = teamsNewData.Name;
-                    team1.League = teamsNewData.League;
+                    team1.LeagueId = teamsNewData.LeagueId;
                     team1.Coach = teamsNewData.Coach;
                     team1.MatchesPlayed = teamsNewData.MatchesPlayed;
                     team1.Stadium = teamsNewData.Stadium;

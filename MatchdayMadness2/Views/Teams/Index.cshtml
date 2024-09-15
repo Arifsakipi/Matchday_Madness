@@ -44,41 +44,43 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.League)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Coach)
-            </td>
-            <th>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.League.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Coach)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Formation)
-            </th>
-            <th>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Stadium)
-            </th>
-            <th>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.MatchesPlayed)
-            </th>
-            <th>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Wins)
-            </th>
-            <th>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Loses)
-            </th>
-            <th>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Draws)
-            </th>
+                </td>
                 <td class="table-action-buttons">
                     @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary" }) |
                     @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary" }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary" })
                 </td>
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>
+
