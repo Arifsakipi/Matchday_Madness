@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchdayMadness2.Migrations
 {
     [DbContext(typeof(DB))]
-    [Migration("20240911195432_startDatabase")]
-    partial class startDatabase
+    [Migration("20240915013830_added-leagues-to-teams")]
+    partial class addedleaguestoteams
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,6 +92,33 @@ namespace MatchdayMadness2.Migrations
                     b.HasIndex("Userid");
 
                     b.ToTable("Favorites");
+                });
+
+            modelBuilder.Entity("MatchdayMadness2.Models.Leagues", b =>
+                {
+                    b.Property<int>("LeagueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LeagueId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Standingsid")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Teamsid")
+                        .HasColumnType("int");
+
+                    b.HasKey("LeagueId");
+
+                    b.HasIndex("Standingsid");
+
+                    b.HasIndex("Teamsid");
+
+                    b.ToTable("Leagues");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.LiveCommentary", b =>
@@ -320,10 +347,6 @@ namespace MatchdayMadness2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Team")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Wins")
                         .HasColumnType("int");
 
@@ -375,8 +398,8 @@ namespace MatchdayMadness2.Migrations
                     b.Property<string>("Formation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("League")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Leagueid")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Loses")
                         .HasColumnType("int");
@@ -426,6 +449,21 @@ namespace MatchdayMadness2.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("StandingsTeams", b =>
+                {
+                    b.Property<int>("Standingsid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Teamsid")
+                        .HasColumnType("int");
+
+                    b.HasKey("Standingsid", "Teamsid");
+
+                    b.HasIndex("Teamsid");
+
+                    b.ToTable("StandingsTeams");
+                });
+
             modelBuilder.Entity("MatchdayMadness2.Models.Favorites", b =>
                 {
                     b.HasOne("MatchdayMadness2.Models.Players", "Players")
@@ -445,6 +483,17 @@ namespace MatchdayMadness2.Migrations
                     b.Navigation("Teams");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("MatchdayMadness2.Models.Leagues", b =>
+                {
+                    b.HasOne("MatchdayMadness2.Models.Standings", null)
+                        .WithMany("Leagues")
+                        .HasForeignKey("Standingsid");
+
+                    b.HasOne("MatchdayMadness2.Models.Teams", null)
+                        .WithMany("Leagues")
+                        .HasForeignKey("Teamsid");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.LiveCommentary", b =>
@@ -524,12 +573,27 @@ namespace MatchdayMadness2.Migrations
             modelBuilder.Entity("MatchdayMadness2.Models.Table", b =>
                 {
                     b.HasOne("MatchdayMadness2.Models.Teams", "Team")
-                        .WithMany("Tables")
+                        .WithMany()
                         .HasForeignKey("Teamsid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("StandingsTeams", b =>
+                {
+                    b.HasOne("MatchdayMadness2.Models.Standings", null)
+                        .WithMany()
+                        .HasForeignKey("Standingsid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MatchdayMadness2.Models.Teams", null)
+                        .WithMany()
+                        .HasForeignKey("Teamsid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.Matches", b =>
@@ -551,6 +615,11 @@ namespace MatchdayMadness2.Migrations
                     b.Navigation("Favorites");
                 });
 
+            modelBuilder.Entity("MatchdayMadness2.Models.Standings", b =>
+                {
+                    b.Navigation("Leagues");
+                });
+
             modelBuilder.Entity("MatchdayMadness2.Models.Teams", b =>
                 {
                     b.Navigation("AwayMatches");
@@ -559,11 +628,11 @@ namespace MatchdayMadness2.Migrations
 
                     b.Navigation("HomeMatches");
 
+                    b.Navigation("Leagues");
+
                     b.Navigation("Matches");
 
                     b.Navigation("Players");
-
-                    b.Navigation("Tables");
                 });
 
             modelBuilder.Entity("MatchdayMadness2.Models.User", b =>

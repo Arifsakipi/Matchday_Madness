@@ -1,0 +1,32 @@
+﻿@model MatchdayMadness2.Models.Leagues
+
+@{
+    ViewData["Title"] = "League Details";
+    Layout = "_LayoutAdmin";
+}
+
+<h1>League Details</h1>
+
+<div>
+    <h4>League</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LeagueId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LeagueId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+
+    <p>
+        <a asp-action="Edit" asp-route-id="@Model.LeagueId" class="btn btn-warning">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </p>
+</div>

@@ -25,10 +25,10 @@
             @Html.DisplayFor(model => model.Position)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Team)
+            @Html.DisplayNameFor(model => model.Teams)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Team)
+            @Html.DisplayFor(model => model.Teams)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Points)
@@ -71,7 +71,7 @@
     <form asp-action="ExecuteDelete">
         @Html.HiddenFor(x => x.id)
         @Html.HiddenFor(x => x.Position)
-        @Html.HiddenFor(x => x.Team)
+        @Html.HiddenFor(x => x.Teams)
         @Html.HiddenFor(x => x.Points)
         @Html.HiddenFor(x => x.MatchesPlayed)
         @Html.HiddenFor(x => x.Wins)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MatchdayMadness2.Migrations
 {
     /// <inheritdoc />
-    public partial class startDatabase : Migration
+    public partial class start : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,7 +39,6 @@ namespace MatchdayMadness2.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Team = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Points = table.Column<int>(type: "int", nullable: false),
                     MatchesPlayed = table.Column<int>(type: "int", nullable: false),
                     Wins = table.Column<int>(type: "int", nullable: false),
@@ -88,6 +87,31 @@ namespace MatchdayMadness2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Leagues",
+                columns: table => new
+                {
+                    LeagueId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Standingsid = table.Column<int>(type: "int", nullable: true),
+                    Teamsid = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Leagues", x => x.LeagueId);
+                    table.ForeignKey(
+                        name: "FK_Leagues_Standings_Standingsid",
+                        column: x => x.Standingsid,
+                        principalTable: "Standings",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_Leagues_Teams_Teamsid",
+                        column: x => x.Teamsid,
+                        principalTable: "Teams",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -145,6 +169,30 @@ namespace MatchdayMadness2.Migrations
                         column: x => x.Teamsid,
                         principalTable: "Teams",
                         principalColumn: "id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StandingsTeams",
+                columns: table => new
+                {
+                    Standingsid = table.Column<int>(type: "int", nullable: false),
+                    Teamsid = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StandingsTeams", x => new { x.Standingsid, x.Teamsid });
+                    table.ForeignKey(
+                        name: "FK_StandingsTeams_Standings_Standingsid",
+                        column: x => x.Standingsid,
+                        principalTable: "Standings",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StandingsTeams_Teams_Teamsid",
+                        column: x => x.Teamsid,
+                        principalTable: "Teams",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -306,6 +354,16 @@ namespace MatchdayMadness2.Migrations
                 column: "Userid");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Leagues_Standingsid",
+                table: "Leagues",
+                column: "Standingsid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Leagues_Teamsid",
+                table: "Leagues",
+                column: "Teamsid");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LiveCommentary_Matchesid",
                 table: "LiveCommentary",
                 column: "Matchesid");
@@ -351,6 +409,11 @@ namespace MatchdayMadness2.Migrations
                 column: "Matchesid");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StandingsTeams_Teamsid",
+                table: "StandingsTeams",
+                column: "Teamsid");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tables_Teamsid",
                 table: "Tables",
                 column: "Teamsid");
@@ -366,6 +429,9 @@ namespace MatchdayMadness2.Migrations
                 name: "Favorites");
 
             migrationBuilder.DropTable(
+                name: "Leagues");
+
+            migrationBuilder.DropTable(
                 name: "LiveCommentary");
 
             migrationBuilder.DropTable(
@@ -375,7 +441,7 @@ namespace MatchdayMadness2.Migrations
                 name: "Results");
 
             migrationBuilder.DropTable(
-                name: "Standings");
+                name: "StandingsTeams");
 
             migrationBuilder.DropTable(
                 name: "Tables");
@@ -388,6 +454,9 @@ namespace MatchdayMadness2.Migrations
 
             migrationBuilder.DropTable(
                 name: "Matches");
+
+            migrationBuilder.DropTable(
+                name: "Standings");
 
             migrationBuilder.DropTable(
                 name: "Users");

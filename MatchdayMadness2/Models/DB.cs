@@ -47,6 +47,7 @@ namespace MatchdayMadness2.Models
         public DbSet<Favorites> Favorites { get; set; }
         public DbSet<Events> Events { get; set; }
         public DbSet<Matches> Matches { get; set; }
+        public DbSet<Leagues> Leagues { get; set; }
 
     }
 }

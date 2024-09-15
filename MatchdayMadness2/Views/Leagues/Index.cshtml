@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MatchdayMadness2.Models.Leagues>
+
+@{
+    ViewData["Title"] = "Leagues Index";
+    Layout = "_LayoutAdmin";
+}
+
+<h1>Leagues</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New League</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LeagueId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeagueId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="table-action-buttons">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.LeagueId}, new { @class = "btn btn-sm btn-outline-primary" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.LeagueId }, new { @class = "btn btn-sm btn-outline-primary" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.LeagueId }, new { @class = "btn btn-sm btn-outline-primary" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

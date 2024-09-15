@@ -4,6 +4,7 @@ using MatchdayMadness2.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchdayMadness2.Migrations
 {
     [DbContext(typeof(DB))]
-    partial class DBModelSnapshot : ModelSnapshot
+    [Migration("20240915012455_start")]
+    partial class start
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -393,6 +396,9 @@ namespace MatchdayMadness2.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Formation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("League")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Loses")

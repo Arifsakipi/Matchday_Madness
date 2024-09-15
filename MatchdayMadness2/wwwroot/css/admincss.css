@@ -148,3 +148,30 @@ h1.h2 {
     .dropdown-item:hover {
         background-color: #f8f9fa;
     }
+#search-results {
+    width: auto; /* Let it automatically adjust based on content */
+    max-width: 400px; /* Set a maximum width to prevent it from being too large */
+    min-width: 200px; /* Ensure it doesn’t get too small */
+    position: absolute;
+    z-index: 1000;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 0; /* Remove any padding on the container */
+}
+
+    #search-results a {
+        padding: 10px 15px; /* Add padding inside each result */
+        display: block;
+        white-space: nowrap; /* Prevent text from wrapping */
+        text-overflow: ellipsis; /* Add ellipsis if text overflows */
+        overflow: hidden; /* Hide overflow text */
+        text-decoration: none;
+        color: #333;
+    }
+
+        #search-results a:hover {
+            background-color: #f1f1f1;
+        }
+

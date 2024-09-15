@@ -58,13 +58,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
                         </li>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Leagues" asp-action="Index">Leagues</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Privacy" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <form class="form-inline my-2 my-lg-0">
+            <form class="form-inline my-2 my-lg-0 position-relative">
                 <input class="form-control mr-sm-2" type="search" id="search-query" placeholder="Search matches..." aria-label="Search" autocomplete="off">
                 <!-- Dropdown for displaying search results -->
                 <div id="search-results" class="dropdown-menu" style="display: none; width: 100%; max-height: 400px; overflow-y: auto;">

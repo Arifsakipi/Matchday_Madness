@@ -1,6 +1,7 @@
 ﻿using MatchdayMadness2.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace MatchdayMadness2.Controllers
@@ -30,6 +31,7 @@ namespace MatchdayMadness2.Controllers
         // GET: TeamsController/Create
         public ActionResult Create()
         {
+            ViewBag.Leagues = new SelectList(_db.Leagues, "LeagueId", "Name");
             return View();
         }
 
@@ -61,7 +63,7 @@ namespace MatchdayMadness2.Controllers
                 if (team1 != null)
                 {
                     team1.Name = teamsNewData.Name;
-                    team1.League = teamsNewData.League;
+                    team1.Leagues = teamsNewData.Leagues;
                     team1.Coach = teamsNewData.Coach;
                     team1.MatchesPlayed = teamsNewData.MatchesPlayed;
                     team1.Stadium = teamsNewData.Stadium;
