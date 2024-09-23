@@ -8,8 +8,81 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a href="javascript:void(0);" id="createNewTeam" class="btn btn-primary">Create New</a>
 </p>
+
+<!-- Modal Structure -->
+<div class="modal fade" id="createTeamModal" tabindex="-1" role="dialog" aria-labelledby="createTeamModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createTeamModalLabel">Create New Team</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form will be loaded here -->
+                <div id="createTeamFormContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteTeamModal" tabindex="-1" role="dialog" aria-labelledby="deleteTeamModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteTeamModalLabel">Delete Team</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Delete form will load here -->
+                <div id="deleteTeamFormContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal Structure -->
+<div class="modal fade" id="editTeamModal" tabindex="-1" role="dialog" aria-labelledby="editTeamModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editTeamModalLabel">Edit Team</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form will be loaded here -->
+                <div id="editTeamFormContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Details Modal Structure -->
+<div class="modal fade" id="detailsTeamModal" tabindex="-1" role="dialog" aria-labelledby="detailsTeamModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsTeamModalLabel">Team Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Details content will be loaded here -->
+                <div id="detailsTeamContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -74,11 +147,147 @@
                     @Html.DisplayFor(modelItem => item.Draws)
             </th>
                 <td class="table-action-buttons">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-sm btn-outline-danger editTeamButton" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary detailsTeamButton" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-sm btn-outline-danger deleteTeamButton" })
                 </td>
         </tr>
+
+            
+
+            
+
 }
     </tbody>
 </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+    $(document).ready(function () {
+            $('#createNewTeam').on('click', function () {
+                $('#createTeamModal').modal('show');
+                // Load the form into the modal
+                $('#createTeamFormContainer').load('/Teams/Create');
+            });
+
+            // create team with ajax from modal
+            $(document).on('submit', '#createTeamForm', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/Teams/Create',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        $('#createTeamModal').modal('hide');
+                        reloadTeamList();
+                    },
+                    error: function () {
+                        alert("Error while creating the team.");
+                    }
+                });
+            });
+
+        
+        
+            // Open Delete Modal and load form with AJAX
+            $(document).on('click', '.deleteTeamButton', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                $('#deleteTeamModal').modal('show');
+                $('#deleteTeamFormContainer').load(url);
+            });
+
+            // Submit delete form via AJAX
+            $(document).on('submit', '#deleteTeamForm', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function () {
+                        $('#deleteTeamModal').modal('hide');
+                        reloadTeamList();
+                    },
+                    error: function () {
+                        alert("Error while deleting the team.");
+                    }
+                });
+            });
+
+
+
+            // Open Edit Modal and load form with AJAX
+            $(document).on('click', '.editTeamButton', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                $('#editTeamModal').modal('show');
+                $('#editTeamFormContainer').load(url);
+            });
+
+            // Submit edit form via AJAX
+            $(document).on('submit', '#editTeamForm', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function () {
+                        $('#editTeamModal').modal('hide');
+                        reloadTeamList();
+                    },
+                    error: function () {
+                        alert("Error while editing the team.");
+                    }
+                });
+            });
+
+
+        
+            // Open Details Modal and load form with AJAX
+            $(document).on('click', '.detailsTeamButton', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                $('#detailsTeamModal').modal('show');
+                $('#detailsTeamContent').load(url);
+            });
+
+            $(document).on('click', '.editTeamButton', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                $('#detailsTeamModal').modal('hide');
+                $('#editTeamModal').modal('show');
+                $('#editTeamFormContainer').load(url, function (response, status, xhr) {
+                    if (status == "error") {
+                        alert("Error loading the edit form: " + xhr.status + " " + xhr.statusText);
+                    }
+                });
+            });
+
+
+
+            // Flag to control reloading
+            let shouldReload = true;
+
+
+            // Function to reload the team list
+            function reloadTeamList() {
+                if (!shouldReload) {
+                    return;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("Index", "Teams")',
+                    type: 'GET',
+                    success: function (data) {
+                        $('table tbody').html($(data).find('table tbody').html());
+                    },
+                    error: function () {
+                        alert("Error while reloading the team list.");
+                    }
+                });
+            }
+    });
+</script>
+

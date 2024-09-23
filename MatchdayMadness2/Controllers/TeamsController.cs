@@ -24,13 +24,13 @@ namespace MatchdayMadness2.Controllers
         public ActionResult Details(int id)
         {
             var teams = _db.Teams.Where(x => x.id.Equals(id)).SingleOrDefault();
-            return View(teams);
+            return PartialView("_DetailsPartial", teams);
         }
 
         // GET: TeamsController/Create
         public ActionResult Create()
         {
-            return View();
+            return PartialView("_CreatePartial");
         }
 
         // POST: TeamsController/Create
@@ -47,7 +47,7 @@ namespace MatchdayMadness2.Controllers
         public ActionResult Edit(int id)
         {
             var team1 = _db.Teams.Find(id);
-            return View(team1);
+            return PartialView("_EditPartial", team1);
         }
 
         // POST: TeamsController/Edit/5
@@ -78,7 +78,7 @@ namespace MatchdayMadness2.Controllers
             }
             catch
             {
-                return View();
+                return PartialView("_EditPartial", teamsNewData);
             }
         }
 
@@ -86,7 +86,7 @@ namespace MatchdayMadness2.Controllers
         public ActionResult Delete(int id)
         {
             var team1 = _db.Teams.Find(id);
-            return View(team1);
+            return PartialView("_DeletePartial_Teams", team1);
         }
 
         // POST: TeamsController/Delete/5
