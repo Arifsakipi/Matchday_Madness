@@ -24,7 +24,7 @@ namespace MatchdayMadness2.Controllers
         public ActionResult Details(int id)
         {
             var teams = _db.Teams.Where(x => x.id.Equals(id)).SingleOrDefault();
-            return View(teams);
+            return PartialView("_DetailsPartial", teams);
         }
 
         // GET: TeamsController/Create
