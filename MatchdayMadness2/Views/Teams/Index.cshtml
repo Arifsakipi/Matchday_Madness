@@ -8,8 +8,27 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a href="javascript:void(0);" id="createNewTeam" class="btn btn-primary">Create New</a>
 </p>
+
+<!-- Modal Structure -->
+<div class="modal fade" id="createTeamModal" tabindex="-1" role="dialog" aria-labelledby="createTeamModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createTeamModalLabel">Create New Team</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form will be loaded here -->
+                <div id="createTeamFormContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -79,6 +98,64 @@
                     @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary" })
                 </td>
         </tr>
+
+            
+
+            
+
 }
     </tbody>
 </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+    $(document).ready(function () {
+        $('#createNewTeam').on('click', function () {
+            $('#createTeamModal').modal('show');
+            // Load the form into the modal
+            $('#createTeamFormContainer').load('/Teams/Create');
+        });
+
+        // create team with ajax from modal
+        $(document).on('submit', '#createTeamForm', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/Teams/Create',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (data) {
+                    $('#createTeamModal').modal('hide');
+                    reloadTeamList();
+                },
+                error: function () {
+                    alert("Error while creating the team.");
+                }
+            });
+        });
+
+        // Flag to control reloading
+        let shouldReload = true;
+
+
+        // Function to reload the team list
+        function reloadTeamList() {
+            if (!shouldReload) {
+                return;
+            }
+
+            $.ajax({
+                url: '@Url.Action("Index", "Teams")',
+                type: 'GET',
+                success: function (data) {
+                    $('table tbody').html($(data).find('table tbody').html());
+                },
+                error: function () {
+                    alert("Error while reloading the team list.");
+                }
+            });
+        }
+    });
+</script>
+

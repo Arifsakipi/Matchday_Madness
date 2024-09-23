@@ -30,7 +30,7 @@ namespace MatchdayMadness2.Controllers
         // GET: TeamsController/Create
         public ActionResult Create()
         {
-            return View();
+            return PartialView("_CreatePartial");
         }
 
         // POST: TeamsController/Create
