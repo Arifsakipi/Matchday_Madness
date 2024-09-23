@@ -47,6 +47,24 @@
     </div>
 </div>
 
+<!-- Edit Modal Structure -->
+<div class="modal fade" id="editTeamModal" tabindex="-1" role="dialog" aria-labelledby="editTeamModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editTeamModalLabel">Edit Team</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form will be loaded here -->
+                <div id="editTeamFormContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -111,7 +129,7 @@
                     @Html.DisplayFor(modelItem => item.Draws)
             </th>
                 <td class="table-action-buttons">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary" }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-sm btn-outline-danger editTeamButton" }) |
                     @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-sm btn-outline-primary" }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-sm btn-outline-danger deleteTeamButton" })
                 </td>
@@ -176,6 +194,33 @@
                     },
                     error: function () {
                         alert("Error while deleting the team.");
+                    }
+                });
+            });
+
+
+
+            // Open Edit Modal and load form with AJAX
+            $(document).on('click', '.editTeamButton', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                $('#editTeamModal').modal('show');
+                $('#editTeamFormContainer').load(url);
+            });
+
+            // Submit edit form via AJAX
+            $(document).on('submit', '#editTeamForm', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function () {
+                        $('#editTeamModal').modal('hide');
+                        reloadTeamList();
+                    },
+                    error: function () {
+                        alert("Error while editing the team.");
                     }
                 });
             });
