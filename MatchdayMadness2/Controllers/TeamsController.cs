@@ -86,7 +86,7 @@ namespace MatchdayMadness2.Controllers
         public ActionResult Delete(int id)
         {
             var team1 = _db.Teams.Find(id);
-            return View(team1);
+            return PartialView("_DeletePartial_Teams", team1);
         }
 
         // POST: TeamsController/Delete/5
