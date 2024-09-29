@@ -13,13 +13,10 @@
 
 <!-- Modal Structure -->
 <div class="modal fade" id="createTeamModal" tabindex="-1" role="dialog" aria-labelledby="createTeamModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createTeamModalLabel">Create New Team</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title" id="createTeamModalLabel">Create New Team</h5>               
             </div>
             <div class="modal-body">
                 <!-- Form will be loaded here -->
@@ -31,13 +28,10 @@
 
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteTeamModal" tabindex="-1" role="dialog" aria-labelledby="deleteTeamModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteTeamModalLabel">Delete Team</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
                 <!-- Delete form will load here -->
@@ -49,13 +43,10 @@
 
 <!-- Edit Modal Structure -->
 <div class="modal fade" id="editTeamModal" tabindex="-1" role="dialog" aria-labelledby="editTeamModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editTeamModalLabel">Edit Team</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
                 <!-- Form will be loaded here -->
@@ -67,13 +58,10 @@
 
 <!-- Details Modal Structure -->
 <div class="modal fade" id="detailsTeamModal" tabindex="-1" role="dialog" aria-labelledby="detailsTeamModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="detailsTeamModalLabel">Team Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
                 <!-- Details content will be loaded here -->
@@ -267,27 +255,19 @@
 
 
 
-            // Flag to control reloading
-            let shouldReload = true;
-
-
-            // Function to reload the team list
-            function reloadTeamList() {
-                if (!shouldReload) {
-                    return;
+        // Function to reload the team list
+        function reloadTeamList() {
+            $.ajax({
+                url: '@Url.Action("Index", "Teams")',
+                type: 'GET',
+                success: function (data) {
+                    $('table tbody').html($(data).find('table tbody').html());
+                },
+                error: function () {
+                    alert("Error while reloading the team list.");
                 }
-
-                $.ajax({
-                    url: '@Url.Action("Index", "Teams")',
-                    type: 'GET',
-                    success: function (data) {
-                        $('table tbody').html($(data).find('table tbody').html());
-                    },
-                    error: function () {
-                        alert("Error while reloading the team list.");
-                    }
-                });
-            }
+            });
+        }
     });
 </script>
 
