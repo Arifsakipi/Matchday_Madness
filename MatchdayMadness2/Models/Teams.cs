@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MatchdayMadness2.Models
@@ -16,6 +17,7 @@ namespace MatchdayMadness2.Models
         public int? Loses { get; set; }
         public int? Draws { get; set; }
 
+        [DisplayName("League")]
         [ForeignKey("League")] 
         public int LeagueId { get; set; } 
 
