@@ -23,7 +23,7 @@ html {
 /* Ensures the body has some bottom margin */
 body {
     margin-bottom: 60px;
-     background-color: #e0e0e0; Light grey background for the entire page 
+     background-color: #e0e0e0; /*Light grey background for the entire page */
 }
 
 /* Header styling */
@@ -63,7 +63,7 @@ header {
 
 /* Main content styling */
 main {
-     background-color: #e0e0e0;  Light blue background for the main content 
+     background-color: #e0e0e0;  /*Light blue background for the main content */
     padding: 20px;
     border-radius: 8px; /* Rounded corners for the main content */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a 3D effect */
