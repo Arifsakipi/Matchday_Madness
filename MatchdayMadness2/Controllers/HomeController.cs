@@ -20,10 +20,29 @@ namespace MatchdayMadness2.Controllers
 
         public IActionResult Index()
         {
-            
-            var matches = _db.Matches.Include(x => x.HomeTeam).Include(x => x.AwayTeam).OrderByDescending(x => x.Date).Take(5).ToList();
+            var matches = _db.Matches.Include(x => x.HomeTeam)
+                .Include(x => x.AwayTeam)
+                .OrderByDescending(x => x.Date)
+                .Take(5)
+                .ToList();
 
-            return View(matches);
+            // Create a HomeViewModel to pass matches and user data
+            var homeViewModel = new HomeViewModel
+            {
+                Match = matches,
+                LoggedInUser = null
+            };
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var username = User.Identity.Name;
+                var user = _db.Users.SingleOrDefault(u => u.username == username);
+
+                // Set the logged-in user in the ViewModel
+                homeViewModel.LoggedInUser = user;
+            }
+
+            return View(homeViewModel);
         }
 
         public IActionResult Privacy()

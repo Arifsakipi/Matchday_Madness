@@ -1,4 +1,16 @@
-﻿@model List<MatchdayMadness2.Models.Matches>
+﻿@model HomeViewModel
+
+<h2>Recent Matches</h2>
+@if (Model.LoggedInUser != null)
+{
+<h3>Welcome, @Model.LoggedInUser.username!</h3>
+<p>Your Email: @Model.LoggedInUser.email</p>
+<!-- Add more user details if needed -->
+}
+else
+{
+<p>Please <a href="/Account/Login">log in</a> to view your information.</p>
+}
 
 @{
     ViewData["Title"] = "Home Page";
@@ -16,7 +28,7 @@
     <div class="row">
         @if (Model != null)
         {
-            foreach (var match in Model)
+            foreach (var match in Model.Match)
             {
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm">

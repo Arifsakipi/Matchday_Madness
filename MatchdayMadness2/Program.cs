@@ -1,4 +1,6 @@
 ﻿using MatchdayMadness2.Models;
+using MatchdayMadness2.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -6,6 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IUserService, UserService>();
+// Add Authentication Services for cookies
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";  // Path to the login page
+    });
 
 var connStr = builder.Configuration.GetConnectionString("MatchdayMadness2");
 builder.Services.AddDbContext<DB>(options=>options.UseSqlServer(connStr));

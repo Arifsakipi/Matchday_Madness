@@ -75,10 +75,56 @@
                 </div>
             </form>
         </nav>
-    </header>
+        <!-- Navbar buttons for login/signup -->
+        <ul class="navbar-nav ml-auto">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0);" onclick="$('#loginModal').modal('show');">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0);" onclick="$('#signupModal').modal('show');">Signup</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="Logout" asp-controller="Account">Logout</a>
+                </li>
+            }
+        </ul>
+        </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
+            <!-- Modals for login/signup -->
+            <div id="loginModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Login</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            @await Html.PartialAsync("_LoginPartial")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="signupModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Signup</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            @await Html.PartialAsync("_SignupPartial")
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
