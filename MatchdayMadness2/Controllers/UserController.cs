@@ -124,7 +124,7 @@ namespace MatchdayMadness2.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 // Handle failure
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
         
             [HttpPost]
