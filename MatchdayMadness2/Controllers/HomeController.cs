@@ -18,8 +18,11 @@ namespace MatchdayMadness2.Controllers
             _db = db; //kjo quhet dependency injection design pattern
         }
 
-        public IActionResult Index()
+        public IActionResult Index(bool failedLogin)
         {
+            if(failedLogin==true)
+                ViewData["FailedLogin"] = failedLogin;
+                
             var matches = _db.Matches.Include(x => x.HomeTeam)
                 .Include(x => x.AwayTeam)
                 .OrderByDescending(x => x.Date)

@@ -124,7 +124,8 @@ namespace MatchdayMadness2.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 // Handle failure
-                return RedirectToAction("Index", "Home");
+                ViewData["FailedLogin"] = true;
+                return RedirectToAction("Index","Home", new { error = true });
             }
         
             [HttpPost]

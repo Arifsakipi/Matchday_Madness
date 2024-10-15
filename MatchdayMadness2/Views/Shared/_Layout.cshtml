@@ -199,121 +199,127 @@
     <link rel="stylesheet" href="~/MatchdayMadness2.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Matchday Madness</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+<header>
+    @if (ViewData["FailedLogin"] != null && (bool)ViewData["FailedLogin"] == true)
+    {
+        <div>Error on login!</div>
+    }
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Matchday Madness</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Matches" asp-action="Index">Matches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">Teams</a>
+                    </li>
+                </ul>
+
+                <!-- Search bar -->
+                <form class="form-inline my-2 my-lg-0 position-relative">
+                    <input class="form-control mr-sm-2" type="search" id="search-query" placeholder="Search matches..." aria-label="Search" autocomplete="off">
+                    <!-- Dropdown for displaying search results -->
+                    <div id="search-results" class="dropdown-menu" style="display: none; width: 100%; max-height: 400px; overflow-y: auto;">
+                        <!-- Results will be dynamically inserted here by JavaScript -->
+                    </div>
+                </form>
+
+                <!-- Navbar buttons for login/signup/logout -->
+                <ul class="navbar-nav ml-auto">
+                    @if (!User.Identity.IsAuthenticated)
+                    {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Matches" asp-action="Index">Matches</a>
+                            <a class="nav-link" href="javascript:void(0);" onclick="$('#loginModal').modal('show');">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">Teams</a>
+                            <a class="nav-link" href="javascript:void(0);" onclick="$('#signupModal').modal('show');">Signup</a>
                         </li>
-                    </ul>
-
-                    <!-- Search bar -->
-                    <form class="form-inline my-2 my-lg-0 position-relative">
-                        <input class="form-control mr-sm-2" type="search" id="search-query" placeholder="Search matches..." aria-label="Search" autocomplete="off">
-                        <!-- Dropdown for displaying search results -->
-                        <div id="search-results" class="dropdown-menu" style="display: none; width: 100%; max-height: 400px; overflow-y: auto;">
-                            <!-- Results will be dynamically inserted here by JavaScript -->
-                        </div>
-                    </form>
-
-                    <!-- Navbar buttons for login/signup/logout -->
-                    <ul class="navbar-nav ml-auto">
-                        @if (!User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" href="javascript:void(0);" onclick="$('#loginModal').modal('show');">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="javascript:void(0);" onclick="$('#signupModal').modal('show');">Signup</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-action="Logout" asp-controller="User">Logout</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-                <<li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        More
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Index">User</a></li> 
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Players" asp-action="Index">Players</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Notifications" asp-action="Index">Notifications</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="LiveCommentary" asp-action="Index">LiveCommentary</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="LiveMatchUpdates" asp-action="Index">LiveMatchUpdates</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Favorites" asp-action="Index">Favorites</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Results" asp-action="Index">Results</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Table" asp-action="Index">Tables</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Standings" asp-action="Index">Standings</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Events" asp-action="Index">Events</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Privacy" asp-action="Privacy">Privacy</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="League" asp-action="Index">Leagues</a></li>
-                    </ul>
-                </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Logout" asp-controller="User">Logout</a>
+                        </li>
+                    }
+                </ul>
             </div>
-        </nav>
-    </header>
-
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-            <!-- Modals for login/signup -->
-            <div id="loginModal" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Login</h5>
-                            <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            @await Html.PartialAsync("_LoginPartial")
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="signupModal" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Signup</h5>
-                            <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            @await Html.PartialAsync("_SignupPartial")
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - MatchdayMadness2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    More
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Index">User</a></li>
+                    <li><a class="dropdown-item" asp-area="" asp-controller="Players" asp-action="Index">Players</a></li>
+                    <li><a class="dropdown-item" asp-area="" asp-controller="Notifications" asp-action="Index">Notifications</a></li>
+                    <li><a class="dropdown-item" asp-area="" asp-controller="LiveCommentary" asp-action="Index">LiveCommentary</a></li>
+                    <li><a class="dropdown-item" asp-area="" asp-controller="LiveMatchUpdates" asp-action="Index">LiveMatchUpdates</a></li>
+                    <li><a class="dropdown-item" asp-area="" asp-controller="Favorites" asp-action="Index">Favorites</a></li>
+                    <li><a class="dropdown-item" asp-area="" asp-controller="Results" asp-action="Index">Results</a></li>
+                    <li><a class="dropdown-item" asp-area="" asp-controller="Table" asp-action="Index">Tables</a></li>
+                    <li><a class="dropdown-item" asp-area="" asp-controller="Standings" asp-action="Index">Standings</a></li>
+                    <li><a class="dropdown-item" asp-area="" asp-controller="Events" asp-action="Index">Events</a></li>
+                    <li><a class="dropdown-item" asp-area="" asp-controller="Privacy" asp-action="Privacy">Privacy</a></li>
+                    <li><a class="dropdown-item" asp-area="" asp-controller="League" asp-action="Index">Leagues</a></li>
+                </ul>
+            </li>
         </div>
-    </footer>
+    </nav>
+</header>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+        <!-- Modals for login/signup -->
+        <div id="loginModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Login</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        @await Html.PartialAsync("_LoginPartial")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="signupModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Signup</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        @await Html.PartialAsync("_SignupPartial")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2024 - MatchdayMadness2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
         $(document).ready(function () {
             $('#search-query').on('input', function () {
                 var query = $(this).val();
@@ -357,6 +363,6 @@
             });
         });
     </script>
-    @await RenderSectionAsync("Scripts", required: false)
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
