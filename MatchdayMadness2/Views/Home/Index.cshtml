@@ -10,6 +10,48 @@
     <p>Catch the latest match details below!</p>
 </div>
 
+<div class="text-center">
+    <p>Click below to Log in or Sign up</p>
+    
+</div>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Log in</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Content will be loaded here via AJAX -->
+                <div id="LoginContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sign Up Modal -->
+<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signUpModalLabel">Sign up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <div id="SignUpContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="container mt-5">
     <h2 class="mb-4">Latest Matches</h2>
 
@@ -42,31 +84,73 @@
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
 
 <script>
-    function updateMatchStatuses() {
 
-        const now = new Date();
+
+            function updateMatchStatuses() {
+
+                const now = new Date();
 
        
-        document.querySelectorAll('.card').forEach(function (card) {
-            const matchDateElement = card.querySelector('.match-date');
-            const matchStatusElement = card.querySelector('.match-status');
-            const matchDate = new Date(matchDateElement.dataset.matchdate);  
+                document.querySelectorAll('.card').forEach(function (card) {
+                    const matchDateElement = card.querySelector('.match-date');
+                    const matchStatusElement = card.querySelector('.match-status');
+                    const matchDate = new Date(matchDateElement.dataset.matchdate);  
 
             
-            if (matchDate > now) {
-                matchStatusElement.textContent = "Upcoming";
-            } else if (matchDate < now && (now - matchDate) <= (90 * 60 * 1000)) { 
-                matchStatusElement.textContent = "Ongoing";
-            } else {
-                matchStatusElement.textContent = "Finished";
-            }
-        });
+                    if (matchDate > now) {
+                        matchStatusElement.textContent = "Upcoming";
+                    } else if (matchDate < now && (now - matchDate) <= (90 * 60 * 1000)) { 
+                        matchStatusElement.textContent = "Ongoing";
+                    } else {
+                        matchStatusElement.textContent = "Finished";
+                    }
+                });
 
-    }
-    document.addEventListener('DOMContentLoaded', function () {
-        updateMatchStatuses(); 
-        setInterval(updateMatchStatuses, 500); 
-    });
+            }
+            document.addEventListener('DOMContentLoaded', function () {
+                updateMatchStatuses(); 
+                setInterval(updateMatchStatuses, 500); 
+            });
+
+
+
+            $(document).ready(function () {
+                $('#LoginButton').on('click', function () {
+                    $('#loginModal').modal('show');
+                    // Load the form into the modal
+                    $('#LoginContent').load('/User/LoginPartial');
+                });
+
+                $('#SignUpButton').on('click', function () {
+                    $('#signUpModal').modal('show');
+                    // Load the form into the modal
+                    $('#SignUpContent').load('/User/SignUpPartial');
+                });
+            });
+
+    
+            // $(document).on('submit', '#SignUpForm', function (e) {
+            //     e.preventDefault();
+            //     $.ajax({
+            //         url: $(this).attr('action'),
+            //         type: 'POST',
+            //         data: $(this).serialize(),
+            //         success: function () {
+            //             $('#signUpModal').modal('hide');
+            //             reloadTeamList();
+            //         },
+            //         error: function () {
+            //             alert("Error while deleting the team.");
+            //         }
+            //     });
+            // });
+    
+
+
 </script>
+

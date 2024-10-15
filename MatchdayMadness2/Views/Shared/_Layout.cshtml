@@ -61,6 +61,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Privacy" asp-action="Privacy">Privacy</a>
                         </li>
+
+                        <div class="d-flex">
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <button type="button" class="btn btn-primary me-2 btn-sm" data-toggle="modal" id="LoginButton">Log in</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" id="SignUpButton">Sign up</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-danger btn-sm" onclick="location.href='@Url.Action("Logout", "User")'">Logout</button>
+                            }
+                        </div>
                     </ul>
                 </div>
             </div>
