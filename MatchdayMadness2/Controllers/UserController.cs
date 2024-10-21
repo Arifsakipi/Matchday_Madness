@@ -121,19 +121,19 @@ namespace MatchdayMadness2.Controllers
             return PartialView("_LoginPartial", new User());
         }
 
+        [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
             var user = _db.Users.SingleOrDefault(u => u.username == username);
             if (user != null && BCrypt.Net.BCrypt.Verify(password, user.password))
             {
-                // Sign in the user
                 await SignInUser(user);
 
-                // Redirect to home page with user info
-                return RedirectToAction("Index", "Home");
+                // JSON response indicating success
+                return Json(new { success = true});
             }
-            // Handle failure
-            return RedirectToAction("Index");
+            ModelState.AddModelError(string.Empty, "Invalid username or password.");
+            return PartialView("_LoginPartial");
         }
 
         [HttpGet]

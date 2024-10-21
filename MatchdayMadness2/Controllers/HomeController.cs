@@ -21,32 +21,30 @@ namespace MatchdayMadness2.Controllers
         public IActionResult Index()
         {
             
-            var matches = _db.Matches.Include(x => x.HomeTeam).Include(x => x.AwayTeam).OrderByDescending(x => x.Date).Take(5).ToList();
+            var matches = _db.Matches
+                .Include(x => x.HomeTeam)
+                .Include(x => x.AwayTeam)
+                .OrderByDescending(x => x.Date)
+                .Take(5)
+                .ToList();
 
-            return View(matches);
+            var ViewModel = new ViewModel
+            {
+                Match = matches,
+                LoggedInUser = null
+            };
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var username = User.Identity.Name;
+                var user = _db.Users.FirstOrDefault(u => u.username == username);
+                ViewModel.LoggedInUser = user;
+            }
+
+            return View(ViewModel);
         }
 
-        [HttpPost]
-        public IActionResult SignUp(MatchdayMadness2.Models.User user)
-        {
-            // Check if the username already exists
-            var existingUser = _db.Users.FirstOrDefault(u => u.username == user.username);
-            if (existingUser == null)
-            {
-                // Add new user to the database
-                _db.Users.Add(user);
-                _db.SaveChanges();
-                // Redirect to home page
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                // Username already exists, show error message
-                ModelState.AddModelError("", "Username already exists");
-                var matches = _db.Matches.Include(x => x.HomeTeam).Include(x => x.AwayTeam).OrderByDescending(x => x.Date).Take(5).ToList();
-                return View("Index", matches);
-            }
-        }
+        
 
         public IActionResult Privacy()
         {

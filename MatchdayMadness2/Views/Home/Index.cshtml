@@ -1,20 +1,23 @@
-﻿@model List<MatchdayMadness2.Models.Matches>
+﻿@model ViewModel;
+
+
+@if (Model.LoggedInUser != null)
+{
+    <h3>Welcome, @Model.LoggedInUser.username!</h3>
+}
+
 
 @{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
 
+
 <div class="text-center">
     <h1 class="display-4">Welcome to Matchday Madness</h1>
     <p>Catch the latest match details below!</p>
-</div>
-
-<div class="text-center">
-    <p>Click below to Log in or Sign up</p>
+</div> 
     
-</div>
-
 <!-- Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -58,7 +61,7 @@
     <div class="row">
         @if (Model != null)
         {
-            foreach (var match in Model)
+            foreach (var match in Model.Match)
             {
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm">
@@ -132,25 +135,6 @@
                     $('#SignUpContent').load('/User/SignUpPartial');
                 });
             });
-
-    
-            // $(document).on('submit', '#SignUpForm', function (e) {
-            //     e.preventDefault();
-            //     $.ajax({
-            //         url: $(this).attr('action'),
-            //         type: 'POST',
-            //         data: $(this).serialize(),
-            //         success: function () {
-            //             $('#signUpModal').modal('hide');
-            //             reloadTeamList();
-            //         },
-            //         error: function () {
-            //             alert("Error while deleting the team.");
-            //         }
-            //     });
-            // });
-    
-
 
 </script>
 
