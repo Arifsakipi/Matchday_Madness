@@ -1,0 +1,6 @@
+@MatchdayMadness.BLL_HostAddress = http://localhost:5071
+
+GET {{MatchdayMadness.BLL_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

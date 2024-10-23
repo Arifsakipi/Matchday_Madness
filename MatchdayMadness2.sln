@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchdayMadness2", "MatchdayMadness2\MatchdayMadness2.csproj", "{51502CA4-5233-41FD-B38A-684F61605BE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchdayMadness.BLL", "MatchdayMadness.BLL\MatchdayMadness.BLL.csproj", "{B48AEB3C-8EDB-4348-9228-341A006D66D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{51502CA4-5233-41FD-B38A-684F61605BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51502CA4-5233-41FD-B38A-684F61605BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51502CA4-5233-41FD-B38A-684F61605BE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B48AEB3C-8EDB-4348-9228-341A006D66D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B48AEB3C-8EDB-4348-9228-341A006D66D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B48AEB3C-8EDB-4348-9228-341A006D66D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B48AEB3C-8EDB-4348-9228-341A006D66D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
