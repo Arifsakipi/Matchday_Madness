@@ -1,0 +1,20 @@
+﻿@model MatchdayMadness.Presentation.Models.Teams
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "_LayoutAdmin";
+}
+
+<h1>Delete</h1>
+<hr/>
+@Html.Partial("_DeletePartial_Teams", Model)
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+

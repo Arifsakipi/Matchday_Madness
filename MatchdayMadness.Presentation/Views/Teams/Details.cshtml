@@ -1,0 +1,17 @@
+﻿@model MatchdayMadness.Presentation.Models.Teams
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_LayoutAdmin";
+}
+
+<h1>Details</h1>
+<hr />
+@Html.Partial("_DetailsPartial", Model)
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}   
+
