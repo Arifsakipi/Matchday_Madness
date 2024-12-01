@@ -5,7 +5,7 @@ namespace MatchdayMadness.Domain.Models
 {
     public class LiveMatchUpdates
     {
-        [Key]
+        
         public int id { get; set; }
         public int CurrenScoreHome { get; set; }
         public int CurrenScoreAway { get; set; }

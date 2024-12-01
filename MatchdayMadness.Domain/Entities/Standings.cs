@@ -4,7 +4,7 @@ namespace MatchdayMadness.Domain.Models
 {
     public class Standings
     {
-        [Key]
+       
 
         public int id { get; set; }
         public string Position { get; set; }

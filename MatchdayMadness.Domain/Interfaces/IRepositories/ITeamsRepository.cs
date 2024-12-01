@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace MatchdayMadness.Domain.Interfaces.IRepositories
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface ITeamsRepository : IGenericRepository<Teams>
     {
-      
     }
-
 }

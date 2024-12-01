@@ -7,7 +7,7 @@ namespace MatchdayMadness.Domain.Models
 {
     public class Favorites
     {
-        [Key]
+        
         public int id { get; set; }
 
         [ForeignKey("id")]

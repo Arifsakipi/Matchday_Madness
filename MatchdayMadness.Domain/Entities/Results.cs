@@ -6,7 +6,7 @@ namespace MatchdayMadness.Domain.Models
 {
     public class Results
     {
-        [Key]
+        
         public int id { get; set; }
         public string Details { get; set; }
         public string Winner { get; set; }

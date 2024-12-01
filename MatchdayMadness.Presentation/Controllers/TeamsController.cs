@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Newtonsoft.Json;
+using System.Net.Http.Json;
 
 namespace MatchdayMadness2.Controllers
 {
@@ -14,17 +16,37 @@ namespace MatchdayMadness2.Controllers
             _db = db;
         }
         // GET: TeamsController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            teams = _db.Teams.ToList();
-            return View(teams);
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync("https://localhost:7276/api/TeamsControllerAPI/GetTeams\r\n");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var teams = JsonConvert.DeserializeObject<List<Teams>>(jsonString);
+                return View(teams);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // GET: TeamsController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            var teams = _db.Teams.Where(x => x.id.Equals(id)).SingleOrDefault();
-            return PartialView("_DetailsPartial", teams);
+            HttpClient client = new HttpClient();
+            var response = client.GetAsync("https://localhost:7276/api/TeamsControllerAPI/GetTeamById?id=" + id).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = response.Content.ReadAsStringAsync().Result;
+                var teams = JsonConvert.DeserializeObject<Teams>(jsonString);
+                return PartialView("_DetailsPartial", teams);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // GET: TeamsController/Create
@@ -36,11 +58,20 @@ namespace MatchdayMadness2.Controllers
         // POST: TeamsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Teams newTeam)
+        public async Task<ActionResult> Create(Teams newTeam)
         {
-            _db.Teams.Add(newTeam);
-            _db.SaveChanges();
-            return RedirectToAction("Index");   
+            HttpClient client = new HttpClient();
+            var response = await client.PostAsJsonAsync("https://localhost:7276/api/TeamsControllerAPI/CreateTeam\r\n", newTeam);
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var teams = JsonConvert.DeserializeObject<Teams>(jsonString);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(newTeam);
+            }
         }
 
         // GET: TeamsController/Edit/5
@@ -53,63 +84,53 @@ namespace MatchdayMadness2.Controllers
         // POST: TeamsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Teams teamsNewData)
+        public async Task<ActionResult> Edit(Teams teamsNewData)
         {
-            try
+            HttpClient client = new HttpClient();
+            var response = await client.PutAsJsonAsync("https://localhost:7276/api/TeamsControllerAPI/UpdateTeam\r\n", teamsNewData);
+            if (response.IsSuccessStatusCode)
             {
-                var team1 = _db.Teams.Find(teamsNewData.id);
-                if (team1 != null)
-                {
-                    team1.Name = teamsNewData.Name;
-                    team1.League = teamsNewData.League;
-                    team1.Coach = teamsNewData.Coach;
-                    team1.MatchesPlayed = teamsNewData.MatchesPlayed;
-                    team1.Stadium = teamsNewData.Stadium;
-                    team1.Formation = teamsNewData.Formation;    
-                    team1.Wins = teamsNewData.Wins;
-                    team1.Loses = teamsNewData.Loses;
-                    team1.Draws = teamsNewData.Draws;
-                }else
-                 {
-                    return View();
-                 }
-                _db.SaveChanges();   
-                return RedirectToAction(nameof(Index));
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var teams = JsonConvert.DeserializeObject<Teams>(jsonString);
+                return RedirectToAction("Index");
             }
-            catch
+            else
             {
-                return PartialView("_EditPartial", teamsNewData);
+                return View(teamsNewData);
             }
         }
 
         // GET: TeamsController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var team1 = _db.Teams.Find(id);
-            return PartialView("_DeletePartial_Teams", team1);
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync($"https://localhost:7276/api/TeamsControllerAPI/GetTeamById?id={id}");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var teams = JsonConvert.DeserializeObject<Teams>(jsonString);
+                var team1 = _db.Teams.Find(id);
+                return PartialView("_DeletePartial_Teams", teams);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: TeamsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ExecuteDelete(int id)
+        public async Task<ActionResult> ExecuteDelete(int id)
         {
-            try
+            HttpClient client = new HttpClient();
+            var response = await client.DeleteAsync($"https://localhost:7276/api/TeamsControllerAPI/DeleteTeam?id={id}");
+            if (response.IsSuccessStatusCode)
             {
-                var team1 = _db.Teams.Find(id);
-                if (team1 != null)
-                {
-                    _db.Teams.Remove(team1);
-                }
-                _db.SaveChanges();
-                return RedirectToAction(nameof(Index));
-                
+                return RedirectToAction("Index");
             }
-            
-           
-            catch
             {
-                return View("Index");
+                return View();
             }
         }
     }

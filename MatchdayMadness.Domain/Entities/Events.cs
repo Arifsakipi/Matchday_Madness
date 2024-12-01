@@ -4,7 +4,7 @@ namespace MatchdayMadness.Domain.Models
 {
     public class Events
     {
-        [Key]
+        
         public int id { get; set; }
         public int Goals { get; set; }
         public int Shots { get; set; }

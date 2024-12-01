@@ -4,6 +4,7 @@ using MatchdayMadness.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchdayMadness.Infrastructure.Migrations
 {
     [DbContext(typeof(DB))]
-    partial class DBModelSnapshot : ModelSnapshot
+    [Migration("20241120202819_innit")]
+    partial class innit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,13 +163,13 @@ namespace MatchdayMadness.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int?>("AwayTeamid")
+                    b.Property<int>("AwayTeamid")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("HomeTeamid")
+                    b.Property<int>("HomeTeamid")
                         .HasColumnType("int");
 
                     b.Property<string>("Result")
@@ -184,12 +187,6 @@ namespace MatchdayMadness.Infrastructure.Migrations
                     b.Property<int?>("Teamsid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Teamsid1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Teamsid2")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
 
                     b.HasIndex("AwayTeamid");
@@ -197,10 +194,6 @@ namespace MatchdayMadness.Infrastructure.Migrations
                     b.HasIndex("HomeTeamid");
 
                     b.HasIndex("Teamsid");
-
-                    b.HasIndex("Teamsid1");
-
-                    b.HasIndex("Teamsid2");
 
                     b.ToTable("Matches");
                 });
@@ -485,26 +478,20 @@ namespace MatchdayMadness.Infrastructure.Migrations
             modelBuilder.Entity("MatchdayMadness.Domain.Models.Matches", b =>
                 {
                     b.HasOne("MatchdayMadness.Domain.Models.Teams", "AwayTeam")
-                        .WithMany()
+                        .WithMany("AwayMatches")
                         .HasForeignKey("AwayTeamid")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MatchdayMadness.Domain.Models.Teams", "HomeTeam")
-                        .WithMany()
-                        .HasForeignKey("HomeTeamid")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("MatchdayMadness.Domain.Models.Teams", null)
-                        .WithMany("AwayMatches")
-                        .HasForeignKey("Teamsid");
-
-                    b.HasOne("MatchdayMadness.Domain.Models.Teams", null)
                         .WithMany("HomeMatches")
-                        .HasForeignKey("Teamsid1");
+                        .HasForeignKey("HomeTeamid")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MatchdayMadness.Domain.Models.Teams", null)
                         .WithMany("Matches")
-                        .HasForeignKey("Teamsid2");
+                        .HasForeignKey("Teamsid");
 
                     b.Navigation("AwayTeam");
 

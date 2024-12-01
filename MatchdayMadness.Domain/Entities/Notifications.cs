@@ -5,7 +5,7 @@ namespace MatchdayMadness.Domain.Models
 {
     public class Notifications
     {
-        [Key]
+       
         public int id { get; set; }
         public string Type { get; set; }
         public string Content { get; set; }

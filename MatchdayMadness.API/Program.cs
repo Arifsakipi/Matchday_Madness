@@ -1,6 +1,11 @@
 
 using MatchdayMadness.API;
+using MatchdayMadness.BLL.Services;
+using MatchdayMadness.Domain.Interfaces.IRepositories;
+using MatchdayMadness.Domain.Interfaces.IServices;
 using MatchdayMadness.Infrastructure.Data;
+using MatchdayMadness.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,8 +14,19 @@ var builder = WebApplication.CreateBuilder(args);
 var startup = new Startup(builder.Configuration);
 startup.ConfigureServices(builder.Services);
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/User/Login";  // Path to the login page
+    });
+
 var connStr = builder.Configuration.GetConnectionString("MatchdayMadness2");
 builder.Services.AddDbContext<DB>(options => options.UseSqlServer(connStr));
+
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 
 
 builder.Services.AddControllers();
@@ -18,8 +34,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
 
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

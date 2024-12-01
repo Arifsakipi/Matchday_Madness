@@ -6,7 +6,7 @@ namespace MatchdayMadness.Domain.Models
 {
     public class Table
     {
-        [Key]
+       
         public int id { get; set; }
         public string LeagueName { get; set; }
         [ForeignKey("Teams")]

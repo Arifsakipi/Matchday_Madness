@@ -23,17 +23,15 @@ namespace MatchdayMadness.Infrastructure.Data
         {
             modelBuilder.Entity<Matches>()
                 .HasOne(m => m.HomeTeam)
-                .WithMany(t => t.HomeMatches)
+                .WithMany()
                 .HasForeignKey(m => m.HomeTeamid)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Matches>()
                 .HasOne(m => m.AwayTeam)
-                .WithMany(t => t.AwayMatches)
+                .WithMany()
                 .HasForeignKey(m => m.AwayTeamid)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Players> Players { get; set; }

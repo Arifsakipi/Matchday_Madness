@@ -20,25 +20,23 @@ namespace MatchdayMadness2.Controllers
         {
             _db = db;
         }
-        
+
         // GET: UserController
         public async Task<ActionResult> Index()
         {
             HttpClient client = new HttpClient();
-
-           var response = await client.GetAsync("https://localhost:7276/api/UserControllerAPI\r\n");
+            var response = await client.GetAsync("https://localhost:7276/api/UserControllerAPI\r\n");
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
-
                 var users = JsonConvert.DeserializeObject<List<User>>(jsonString);
                 return View(users);
             }
             else
             {
-               return View();
+                return View();
             }
-        }   
+        }
 
         // GET: UserController/Details/5
         public ActionResult Details(int id)
@@ -56,12 +54,19 @@ namespace MatchdayMadness2.Controllers
         // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(User newUser)
+        public async Task<ActionResult> Create(User newUser)
         {
+            HttpClient client = new HttpClient();
+            var response = await client.PostAsJsonAsync("https://localhost:7276/api/UserControllerAPI\r\n", newUser);
+            if (response.IsSuccessStatusCode)
             {
-                _db.Users.Add(newUser);
-                _db.SaveChanges();
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var users = JsonConvert.DeserializeObject<User>(jsonString);
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(newUser);
             }
         }
 
@@ -75,29 +80,19 @@ namespace MatchdayMadness2.Controllers
         // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(User userNewData)
+        public async Task<ActionResult> Edit(User userNewData)
         {
-            try
+            HttpClient client = new HttpClient();
+            var response = await client.PutAsJsonAsync("https://localhost:7276/api/UserControllerAPI", userNewData);
+            if (response.IsSuccessStatusCode)
             {
-                var user = _db.Users.Find(userNewData.id);
-                if (user != null)
-                {
-                    user.username = userNewData.username;
-                    user.email = userNewData.email;
-                    user.password = userNewData.password;
-                    user.phoneNumber = userNewData.phoneNumber;
-                    user.dateOfBirth = userNewData.dateOfBirth;
-                    _db.SaveChanges();
-                }
-                else
-                {
-                    return View();
-                }
-                return RedirectToAction(nameof(Index));
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var users = JsonConvert.DeserializeObject<User>(jsonString);
+                return RedirectToAction("Index");
             }
-            catch
+            else
             {
-                return View();
+                return View(userNewData);
             }
         }
 
@@ -111,18 +106,19 @@ namespace MatchdayMadness2.Controllers
         // POST: UserController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ExecuteDelete(int id)
+        public async Task<ActionResult> ExecuteDelete(int id)
         {
-            try
-            {
-                var user = _db.Users.Find(id);
-                if (user != null)
-                    _db.Users.Remove(user);
-                _db.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
+            HttpClient client = new HttpClient();
 
-            catch
+            var response = await client.DeleteAsync("https://localhost:7276/api/UserControllerAPI\r\n" + id);
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+
+                var users = JsonConvert.DeserializeObject<User>(jsonString);
+                return RedirectToAction("Index");
+            }
+            else
             {
                 return View();
             }
@@ -143,7 +139,7 @@ namespace MatchdayMadness2.Controllers
                 await SignInUser(user);
 
                 // JSON response indicating success
-                return Json(new { success = true});
+                return Json(new { success = true });
             }
             ModelState.AddModelError(string.Empty, "Invalid username or password.");
             return PartialView("_LoginPartial");

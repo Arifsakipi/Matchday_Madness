@@ -22,5 +22,27 @@ namespace MatchdayMadness.API.Controllers
         {
             return await _userService.GetUser();
         }
+        [HttpGet("{id}")]
+        public async Task<User> GetUserById(int id)
+        {
+            return await _userService.GetUserById(id);
+        }
+
+        [HttpPost]
+        public async Task<User> CreateUser(User newUser)
+        {
+            return await _userService.CreateUser(newUser);
+        }
+
+        [HttpPut]   
+        public async Task<User> UpdateUser(User userNewData)
+        {
+            return await _userService.UpdateUser(userNewData);
+        }
+        [HttpDelete]
+        public async Task<User> DeleteUser(int id)
+        {
+            return await _userService.DeleteUser(id);
+        }
     }
 }   

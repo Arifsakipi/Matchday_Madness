@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
+using Newtonsoft.Json;
 
 namespace MatchdayMadness2.Controllers
 {
-   
+
     public class PlayersController : Controller
     {
         private static DB _db;
@@ -17,24 +18,58 @@ namespace MatchdayMadness2.Controllers
         }
         private static List<Players> players = new List<Players>();
         // GET: PlayersController
-        public ActionResult Index()
-        {           
-            players = _db.Players.ToList();
-            return View(players);
+        public async Task<ActionResult> Index()
+        {
+            try
+            {
 
+                HttpClient client = new HttpClient();
+                var response = await client.GetAsync("https://localhost:7276/api/PlayersControllerAPI/GetPlayer");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    var players = JsonConvert.DeserializeObject<List<Players>>(jsonString);
+                    return View(players);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            catch
+            {
+                return View();
+            }
         }
         // GET: PlayersController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            var p1 = _db.Players.Include(x=>x.Teams).Where(x => x.ID.Equals(id)).SingleOrDefault();
-            return View(p1);
+            try
+            {
+                HttpClient client = new HttpClient();
+                var response = await client.GetAsync($"https://localhost:7276/api/PlayersControllerAPI/GetPlayerById?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    var players = JsonConvert.DeserializeObject<Players>(jsonString);
+                    return View(players);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: PlayersController/Create
         public ActionResult Create()
         {
             var teams = _db.Teams.ToList();
-            var teamsSelectList = new SelectList(teams,"id","Name");
+            var teamsSelectList = new SelectList(teams, "id", "Name");
             ViewBag.teams = teamsSelectList;
             return View();
         }
@@ -42,41 +77,70 @@ namespace MatchdayMadness2.Controllers
         // POST: PlayersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Players newPlayer)
+        public async Task<ActionResult> Create(Players newPlayer)
         {
-            _db.Players.Add(newPlayer);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                HttpClient client = new HttpClient();
+                var response = await client.PostAsJsonAsync("https://localhost:7276/api/PlayersControllerAPI/CreatePlayer", newPlayer);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    var players = JsonConvert.DeserializeObject<Players>(jsonString);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: PlayersController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var player1 = _db.Players.Find(id);
-            var teams = _db.Teams.ToList();
-            var teamsSelectList = new SelectList(teams, "id", "Name", player1.Teamsid);
-            ViewBag.teams = teamsSelectList;
-            return View(player1);
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync($"https://localhost:7276/api/PlayersControllerAPI/GetPlayerById/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var players = JsonConvert.DeserializeObject<Players>(jsonString);
+                var player1 = _db.Players.Find(id);
+                var teams = _db.Teams.ToList();
+                var teamsSelectList = new SelectList(teams, "id", "Name", player1.Teamsid);
+                ViewBag.teams = teamsSelectList;
+                return View(player1);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: PlayersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Players playersNewData)
+        public async Task<ActionResult> Edit(Players playersNewData)
         {
             try
             {
+                HttpClient client = new HttpClient();
+                var response = await client.PutAsJsonAsync("https://localhost:7276/api/PlayersControllerAPI/UpdatePlayer", playersNewData);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    var players = JsonConvert.DeserializeObject<Players>(jsonString);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
 
-                var player1 = _db.Players.Find( playersNewData.ID);
-                
-                player1.Name = playersNewData.Name;
-                player1.Age = playersNewData.Age; 
-                player1.Position = playersNewData.Position;
-                player1.Teamsid = playersNewData.Teamsid;   
-                _db.SaveChanges();
-
-                return RedirectToAction(nameof(Index));
-               
             }
             catch
             {
@@ -85,23 +149,40 @@ namespace MatchdayMadness2.Controllers
         }
 
         // GET: PlayersController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var player1 = _db.Players.Find(id);
-            return View(player1);
+            HttpClient client = new HttpClient();
+            var response = client.GetAsync($"https://localhost:7276/api/PlayersControllerAPI/GetPlayerById/{id}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = response.Content.ReadAsStringAsync().Result;
+                var players = JsonConvert.DeserializeObject<Players>(jsonString);
+                var player1 = _db.Players.Find(id);
+                return View(player1);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: PlayersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ExecuteDelete(int id )
+        public async Task<ActionResult> ExecuteDelete(int id)
         {
             try
             {
-                var player1 = _db.Players.Find(id);
-                _db.Players.Remove(player1);
-                _db.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                HttpClient client = new HttpClient();
+                var response = client.DeleteAsync($"https://localhost:7276/api/PlayersControllerAPI/DeletePlayer/{id}").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             catch
             {

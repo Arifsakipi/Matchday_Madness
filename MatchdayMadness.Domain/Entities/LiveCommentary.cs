@@ -5,7 +5,7 @@ namespace MatchdayMadness.Domain.Models
 {
     public class LiveCommentary
     {
-        [Key]
+        
         public int id { get; set; }
         public string Commentator { get; set; }
         public string DescriptiveText { get; set; }

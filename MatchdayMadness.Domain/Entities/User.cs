@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace MatchdayMadness.Domain.Models
 {
@@ -6,14 +7,16 @@ namespace MatchdayMadness.Domain.Models
     {
         [Key]
         public int id { get; set; }
-        public string? username { get; set; }
-        public string? email { get; set; }
-        public string? password { get; set; }
-        public string? phoneNumber { get; set; }
+        public string username { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
+        public string phoneNumber { get; set; }
         public DateTime dateOfBirth { get; set; }
 
 
-        public virtual List<Favorites> Favorites { get; set; }
-        public virtual List<Notifications> Notifications { get; set; }
+        [JsonIgnore]
+        public virtual List<Favorites>? Favorites { get; set; }
+        [JsonIgnore]    
+        public virtual List<Notifications>? Notifications { get; set; }
     }
 }
