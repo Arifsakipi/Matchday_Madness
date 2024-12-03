@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchdayMadness2", "MatchdayMadness2\MatchdayMadness2.csproj", "{51502CA4-5233-41FD-B38A-684F61605BE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchdayMadness2.MVC", "MatchdayMadness2.MVC\MatchdayMadness2.MVC.csproj", "{51502CA4-5233-41FD-B38A-684F61605BE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchdayMadness.BLL", "MatchdayMadness.BLL\MatchdayMadness.BLL.csproj", "{B48AEB3C-8EDB-4348-9228-341A006D66D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchdayMadness.API", "MatchdayMadness.API\MatchdayMadness.API.csproj", "{B48AEB3C-8EDB-4348-9228-341A006D66D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchdayMadness.BLL", "MatchdayMadness.BLL\MatchdayMadness.BLL.csproj", "{37488F06-E188-4291-ABAE-DFD4D9D2EB1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchdayMadness.Domain", "MatchdayMadness.Domain\MatchdayMadness.Domain.csproj", "{4C1AB734-086C-4E93-AD35-7B33A81CC735}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchdayMadness.Infrastructure", "MatchdayMadness.Infrastructure\MatchdayMadness.Infrastructure.csproj", "{16985838-EAC6-4A6B-8AEE-12F73D23FA28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{B48AEB3C-8EDB-4348-9228-341A006D66D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B48AEB3C-8EDB-4348-9228-341A006D66D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B48AEB3C-8EDB-4348-9228-341A006D66D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37488F06-E188-4291-ABAE-DFD4D9D2EB1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37488F06-E188-4291-ABAE-DFD4D9D2EB1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37488F06-E188-4291-ABAE-DFD4D9D2EB1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37488F06-E188-4291-ABAE-DFD4D9D2EB1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C1AB734-086C-4E93-AD35-7B33A81CC735}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C1AB734-086C-4E93-AD35-7B33A81CC735}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C1AB734-086C-4E93-AD35-7B33A81CC735}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C1AB734-086C-4E93-AD35-7B33A81CC735}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16985838-EAC6-4A6B-8AEE-12F73D23FA28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16985838-EAC6-4A6B-8AEE-12F73D23FA28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16985838-EAC6-4A6B-8AEE-12F73D23FA28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16985838-EAC6-4A6B-8AEE-12F73D23FA28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
