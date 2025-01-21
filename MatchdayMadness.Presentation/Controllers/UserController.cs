@@ -25,7 +25,7 @@ namespace MatchdayMadness2.Controllers
         public async Task<ActionResult> Index()
         {
             HttpClient client = new HttpClient();
-            var response = await client.GetAsync("https://localhost:7276/api/UserControllerAPI\r\n");
+            var response = await client.GetAsync("http://localhost:5156/api/UserControllerAPI\r\n");
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
@@ -57,7 +57,7 @@ namespace MatchdayMadness2.Controllers
         public async Task<ActionResult> Create(User newUser)
         {
             HttpClient client = new HttpClient();
-            var response = await client.PostAsJsonAsync("https://localhost:7276/api/UserControllerAPI\r\n", newUser);
+            var response = await client.PostAsJsonAsync("http://localhost:5156/api/UserControllerAPI\r\n", newUser);
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
@@ -83,7 +83,7 @@ namespace MatchdayMadness2.Controllers
         public async Task<ActionResult> Edit(User userNewData)
         {
             HttpClient client = new HttpClient();
-            var response = await client.PutAsJsonAsync("https://localhost:7276/api/UserControllerAPI", userNewData);
+            var response = await client.PutAsJsonAsync("http://localhost:5156/api/UserControllerAPI", userNewData);
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
@@ -110,7 +110,7 @@ namespace MatchdayMadness2.Controllers
         {
             HttpClient client = new HttpClient();
 
-            var response = await client.DeleteAsync("https://localhost:7276/api/UserControllerAPI\r\n" + id);
+            var response = await client.DeleteAsync("http://localhost:5156/api/UserControllerAPI\r\n" + id);
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();

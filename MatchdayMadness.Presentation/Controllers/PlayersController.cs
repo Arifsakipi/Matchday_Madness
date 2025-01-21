@@ -24,7 +24,7 @@ namespace MatchdayMadness2.Controllers
             {
 
                 HttpClient client = new HttpClient();
-                var response = await client.GetAsync("https://localhost:7276/api/PlayersControllerAPI/GetPlayer");
+                var response = await client.GetAsync("https://localhost:5156/api/PlayersControllerAPI/GetPlayer");
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonString = await response.Content.ReadAsStringAsync();
@@ -47,7 +47,7 @@ namespace MatchdayMadness2.Controllers
             try
             {
                 HttpClient client = new HttpClient();
-                var response = await client.GetAsync($"https://localhost:7276/api/PlayersControllerAPI/GetPlayerById?id={id}");
+                var response = await client.GetAsync($"https://localhost:5156/api/PlayersControllerAPI/GetPlayerById?id={id}");
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonString = await response.Content.ReadAsStringAsync();
@@ -82,7 +82,7 @@ namespace MatchdayMadness2.Controllers
             try
             {
                 HttpClient client = new HttpClient();
-                var response = await client.PostAsJsonAsync("https://localhost:7276/api/PlayersControllerAPI/CreatePlayer", newPlayer);
+                var response = await client.PostAsJsonAsync("https://localhost:5156/api/PlayersControllerAPI/CreatePlayer", newPlayer);
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonString = await response.Content.ReadAsStringAsync();
@@ -104,7 +104,7 @@ namespace MatchdayMadness2.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             HttpClient client = new HttpClient();
-            var response = await client.GetAsync($"https://localhost:7276/api/PlayersControllerAPI/GetPlayerById/{id}");
+            var response = await client.GetAsync($"https://localhost:5156/api/PlayersControllerAPI/GetPlayerById/{id}");
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
@@ -129,7 +129,7 @@ namespace MatchdayMadness2.Controllers
             try
             {
                 HttpClient client = new HttpClient();
-                var response = await client.PutAsJsonAsync("https://localhost:7276/api/PlayersControllerAPI/UpdatePlayer", playersNewData);
+                var response = await client.PutAsJsonAsync("https://localhost:5156/api/PlayersControllerAPI/UpdatePlayer", playersNewData);
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonString = await response.Content.ReadAsStringAsync();
@@ -152,7 +152,7 @@ namespace MatchdayMadness2.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             HttpClient client = new HttpClient();
-            var response = client.GetAsync($"https://localhost:7276/api/PlayersControllerAPI/GetPlayerById/{id}").Result;
+            var response = client.GetAsync($"https://localhost:5156/api/PlayersControllerAPI/GetPlayerById/{id}").Result;
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = response.Content.ReadAsStringAsync().Result;
@@ -174,7 +174,7 @@ namespace MatchdayMadness2.Controllers
             try
             {
                 HttpClient client = new HttpClient();
-                var response = client.DeleteAsync($"https://localhost:7276/api/PlayersControllerAPI/DeletePlayer/{id}").Result;
+                var response = client.DeleteAsync($"https://localhost:5156/api/PlayersControllerAPI/DeletePlayer/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");

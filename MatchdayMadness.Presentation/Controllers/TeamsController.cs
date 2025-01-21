@@ -19,7 +19,7 @@ namespace MatchdayMadness2.Controllers
         public async Task<ActionResult> Index()
         {
             HttpClient client = new HttpClient();
-            var response = await client.GetAsync("https://localhost:7276/api/TeamsControllerAPI/GetTeams\r\n");
+            var response = await client.GetAsync("http://localhost:5156/api/TeamsControllerAPI/GetTeams\r\n");
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
@@ -36,7 +36,7 @@ namespace MatchdayMadness2.Controllers
         public async Task<ActionResult> Details(int id)
         {
             HttpClient client = new HttpClient();
-            var response = client.GetAsync("https://localhost:7276/api/TeamsControllerAPI/GetTeamById?id=" + id).Result;
+            var response = client.GetAsync("http://localhost:5156/api/TeamsControllerAPI/GetTeamById?id=" + id).Result;
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = response.Content.ReadAsStringAsync().Result;
@@ -61,7 +61,7 @@ namespace MatchdayMadness2.Controllers
         public async Task<ActionResult> Create(Teams newTeam)
         {
             HttpClient client = new HttpClient();
-            var response = await client.PostAsJsonAsync("https://localhost:7276/api/TeamsControllerAPI/CreateTeam\r\n", newTeam);
+            var response = await client.PostAsJsonAsync("http://localhost:5156/api/TeamsControllerAPI/CreateTeam\r\n", newTeam);
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
@@ -87,7 +87,7 @@ namespace MatchdayMadness2.Controllers
         public async Task<ActionResult> Edit(Teams teamsNewData)
         {
             HttpClient client = new HttpClient();
-            var response = await client.PutAsJsonAsync("https://localhost:7276/api/TeamsControllerAPI/UpdateTeam\r\n", teamsNewData);
+            var response = await client.PutAsJsonAsync("http://localhost:5156/api/TeamsControllerAPI/UpdateTeam\r\n", teamsNewData);
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
@@ -104,7 +104,7 @@ namespace MatchdayMadness2.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             HttpClient client = new HttpClient();
-            var response = await client.GetAsync($"https://localhost:7276/api/TeamsControllerAPI/GetTeamById?id={id}");
+            var response = await client.GetAsync($"http://localhost:5156/api/TeamsControllerAPI/GetTeamById?id={id}");
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
@@ -124,7 +124,7 @@ namespace MatchdayMadness2.Controllers
         public async Task<ActionResult> ExecuteDelete(int id)
         {
             HttpClient client = new HttpClient();
-            var response = await client.DeleteAsync($"https://localhost:7276/api/TeamsControllerAPI/DeleteTeam?id={id}");
+            var response = await client.DeleteAsync($"http://localhost:5156/api/TeamsControllerAPI/DeleteTeam?id={id}");
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
