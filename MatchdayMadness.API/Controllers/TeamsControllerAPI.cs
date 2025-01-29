@@ -15,13 +15,25 @@ namespace MatchdayMadness.API.Controllers
             _teamsService = teamsService;
         }
 
+        //[HttpGet("FetchTeamFromExternalApi/{externalId}")]
+        //public async Task<Teams> FetchTeamFromExternalApi(int externalId)
+        //{
+        //    return await _teamsService.FetchTeamFromExternalApi(externalId);
+        //}
+
+        //[HttpGet("FetchAllTeamsFromExternalApi")]
+        //public async Task<IEnumerable<Teams>> FetchAllTeamsFromExternalApi()
+        //{
+        //    return await _teamsService.FetchAllTeamsFromExternalApi();
+        //}
+
         [HttpGet("GetTeams")]
         public async Task<IEnumerable<Teams>> GetTeams()
         {
             return await _teamsService.GetTeam();
         }
 
-        [HttpGet("GetTeamById")]
+        [HttpGet("GetTeamById/{id}")]
         public async Task<Teams> GetTeamById(int id)
         {
             return await _teamsService.GetTeamById(id);
@@ -39,7 +51,7 @@ namespace MatchdayMadness.API.Controllers
             return await _teamsService.UpdateTeam(teamNewData);
         }
 
-        [HttpDelete("DeleteTeam")]
+        [HttpDelete("DeleteTeam/{id}")]
         public async Task<Teams> DeleteTeam(int id)
         {
             return await _teamsService.DeleteTeam(id);

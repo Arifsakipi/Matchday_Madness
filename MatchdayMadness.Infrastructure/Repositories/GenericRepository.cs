@@ -56,8 +56,15 @@ namespace MatchdayMadness.Infrastructure.Repositories
 
         public async Task RemoveAsync(T entity)
         {
-            _dbSet.Remove(entity);
-            _db.SaveChanges(); 
+            try
+            {
+                _dbSet.Remove(entity);
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         public void RemoveRange(IEnumerable<T> entities)

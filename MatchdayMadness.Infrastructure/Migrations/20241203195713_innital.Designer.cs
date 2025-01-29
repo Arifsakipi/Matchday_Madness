@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchdayMadness.Infrastructure.Migrations
 {
     [DbContext(typeof(DB))]
-    [Migration("20241120202819_innit")]
-    partial class innit
+    [Migration("20241203195713_innital")]
+    partial class innital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,13 +163,13 @@ namespace MatchdayMadness.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("AwayTeamid")
+                    b.Property<int?>("AwayTeamid")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("HomeTeamid")
+                    b.Property<int?>("HomeTeamid")
                         .HasColumnType("int");
 
                     b.Property<string>("Result")
@@ -480,14 +480,12 @@ namespace MatchdayMadness.Infrastructure.Migrations
                     b.HasOne("MatchdayMadness.Domain.Models.Teams", "AwayTeam")
                         .WithMany("AwayMatches")
                         .HasForeignKey("AwayTeamid")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MatchdayMadness.Domain.Models.Teams", "HomeTeam")
                         .WithMany("HomeMatches")
                         .HasForeignKey("HomeTeamid")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MatchdayMadness.Domain.Models.Teams", null)
                         .WithMany("Matches")

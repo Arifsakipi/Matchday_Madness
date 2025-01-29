@@ -27,7 +27,7 @@ namespace MatchdayMadness.API.Controllers
             return await _matchesService.SearchMatches(query);
         }
 
-        [HttpGet("GetMatchById")]
+        [HttpGet("GetMatchById/{id}")]
         public async Task<Matches> GetMatchById(int id)
         {
             return await _matchesService.GetMatchById(id);
@@ -45,7 +45,7 @@ namespace MatchdayMadness.API.Controllers
             return await _matchesService.UpdateMatch(matchNewData);
         }
 
-        [HttpDelete("DeleteMatch")]
+        [HttpDelete("DeleteMatch/{id}")]
         public async Task<Matches> DeleteMatch(int id)
         {
             return await _matchesService.DeleteMatch(id);

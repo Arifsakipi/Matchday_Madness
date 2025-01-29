@@ -33,6 +33,7 @@ namespace MatchdayMadness.API
 
             services.AddScoped<IMatchesRepository, MatchesRepository>();
             services.AddScoped<IMatchesService, MatchesService>();
+
         }
     }
 }
