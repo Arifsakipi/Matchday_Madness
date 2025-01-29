@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MatchdayMadness.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class startDatabase : Migration
+    public partial class innital : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -79,10 +79,10 @@ namespace MatchdayMadness.Infrastructure.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    username = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     dateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -99,8 +99,8 @@ namespace MatchdayMadness.Infrastructure.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Stadium = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HomeTeamid = table.Column<int>(type: "int", nullable: false),
-                    AwayTeamid = table.Column<int>(type: "int", nullable: false),
+                    HomeTeamid = table.Column<int>(type: "int", nullable: true),
+                    AwayTeamid = table.Column<int>(type: "int", nullable: true),
                     Result = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Teamsid = table.Column<int>(type: "int", nullable: true)
                 },

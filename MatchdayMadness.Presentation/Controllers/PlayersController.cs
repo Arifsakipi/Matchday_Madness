@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace MatchdayMadness2.Controllers
 {
 
-    public class PlayersController : Controller
+    public class PlayersController : Controller 
     {
         private static DB _db;
         public PlayersController(DB db)

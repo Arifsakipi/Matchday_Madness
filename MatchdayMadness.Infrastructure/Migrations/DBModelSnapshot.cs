@@ -184,12 +184,6 @@ namespace MatchdayMadness.Infrastructure.Migrations
                     b.Property<int?>("Teamsid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Teamsid1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Teamsid2")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
 
                     b.HasIndex("AwayTeamid");
@@ -197,10 +191,6 @@ namespace MatchdayMadness.Infrastructure.Migrations
                     b.HasIndex("HomeTeamid");
 
                     b.HasIndex("Teamsid");
-
-                    b.HasIndex("Teamsid1");
-
-                    b.HasIndex("Teamsid2");
 
                     b.ToTable("Matches");
                 });
@@ -485,26 +475,18 @@ namespace MatchdayMadness.Infrastructure.Migrations
             modelBuilder.Entity("MatchdayMadness.Domain.Models.Matches", b =>
                 {
                     b.HasOne("MatchdayMadness.Domain.Models.Teams", "AwayTeam")
-                        .WithMany()
+                        .WithMany("AwayMatches")
                         .HasForeignKey("AwayTeamid")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MatchdayMadness.Domain.Models.Teams", "HomeTeam")
-                        .WithMany()
+                        .WithMany("HomeMatches")
                         .HasForeignKey("HomeTeamid")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MatchdayMadness.Domain.Models.Teams", null)
-                        .WithMany("AwayMatches")
-                        .HasForeignKey("Teamsid");
-
-                    b.HasOne("MatchdayMadness.Domain.Models.Teams", null)
-                        .WithMany("HomeMatches")
-                        .HasForeignKey("Teamsid1");
-
-                    b.HasOne("MatchdayMadness.Domain.Models.Teams", null)
                         .WithMany("Matches")
-                        .HasForeignKey("Teamsid2");
+                        .HasForeignKey("Teamsid");
 
                     b.Navigation("AwayTeam");
 

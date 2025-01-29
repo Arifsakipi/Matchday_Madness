@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace MatchdayMadness2.Controllers
 {
@@ -15,35 +16,46 @@ namespace MatchdayMadness2.Controllers
         }
         private static List<Matches> matches = new List<Matches>();
         // GET: MatchesController
-        public IActionResult Search(string query)
+        public async Task<IActionResult> Search(string query)
         {
-            if (string.IsNullOrWhiteSpace(query))
-            {
-                return Json(new List<object>()); // Return an empty list if query is empty
-            }
 
-            var matches = _db.Matches
-                .Include(x => x.HomeTeam)
-                .Include(x => x.AwayTeam)
-                .Where(m => m.HomeTeam.Name.Contains(query) || m.AwayTeam.Name.Contains(query))
-                .Select(m => new
-                {
-                    id = m.id,
-                    HomeTeam = m.HomeTeam.Name,
-                    AwayTeam = m.AwayTeam.Name,
-                    Date = m.Date.ToString("dd MMMM, yyyy"),
-                    Stadium = m.Stadium,
-                    Status = m.Status
-                })
-                .ToList();
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync("https://localhost:7276/api/MatchesControllerAPI/SearchMatches\r\n");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var matches = JsonConvert.DeserializeObject<Matches>(jsonString);
+                return View(matches);
+            }
+            //if (string.IsNullOrWhiteSpace(query))
+            //{
+            //    return Json(new List<object>()); // Return an empty list if query is empty
+            //}
+
+            //var matches = _db.Matches
+            //    .Include(x => x.HomeTeam)
+            //    .Include(x => x.AwayTeam)
+            //    .Where(m => m.HomeTeam.Name.Contains(query) || m.AwayTeam.Name.Contains(query))
+            //    .Select(m => new
+            //    {
+            //        id = m.id,
+            //        HomeTeam = m.HomeTeam.Name,
+            //        AwayTeam = m.AwayTeam.Name,
+            //        Date = m.Date.ToString("dd MMMM, yyyy"),
+            //        Stadium = m.Stadium,
+            //        Status = m.Status
+            //    })
+            //    .ToList();
 
             return Json(matches); // Return the matches as JSON
         }
 
         public ActionResult Index()
         {
+
+
             matches = _db.Matches.
-                Include(x=>x.HomeTeam).Include(x=>x.AwayTeam).ToList();
+                Include(x => x.HomeTeam).Include(x => x.AwayTeam).ToList();
             return View(matches);
         }
 

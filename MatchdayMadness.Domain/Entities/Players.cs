@@ -18,7 +18,7 @@ namespace MatchdayMadness.Domain.Models
         [JsonIgnore]    
         public virtual List<Favorites>? Favorites { get; set; }
 
-        [JsonIgnore]
+
         [ForeignKey("Teams")]
         [DisplayName("Team")]
         public int? Teamsid { get; set; }

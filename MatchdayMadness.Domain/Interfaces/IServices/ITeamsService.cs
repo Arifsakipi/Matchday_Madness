@@ -14,5 +14,7 @@ namespace MatchdayMadness.Domain.Interfaces.IServices
         Task<Teams> CreateTeam(Teams newUser);
         Task<Teams> UpdateTeam(Teams userNewData);
         Task<Teams> DeleteTeam(int id);
+        //Task<Teams> FetchTeamFromExternalApi(int externalId);
+        //Task<IEnumerable<Teams>> FetchAllTeamsFromExternalApi();
     }
 }

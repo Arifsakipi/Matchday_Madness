@@ -19,7 +19,7 @@ namespace MatchdayMadness2.Controllers
         public async Task<ActionResult> Index()
         {
             HttpClient client = new HttpClient();
-            var response = await client.GetAsync("https://localhost:7276/api/TeamsControllerAPI/GetTeams\r\n");
+            var response = await client.GetAsync("https://localhost:7276/api/TeamsControllerAPI/FetchAllTeamsFromExternalApi");
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
@@ -129,6 +129,7 @@ namespace MatchdayMadness2.Controllers
             {
                 return RedirectToAction("Index");
             }
+            else
             {
                 return View();
             }

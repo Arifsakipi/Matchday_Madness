@@ -11,5 +11,8 @@ namespace MatchdayMadness.Domain.Interfaces.IRepositories
     public interface IMatchesRepository : IGenericRepository<Matches>
     {
         IQueryable<Matches> Search(string query);
+        Task<List<Matches>> GetMatchesAsync();
+
+        Task<List<Matches>> GetTeamMatches(int teamid);
     }
 }

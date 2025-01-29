@@ -19,6 +19,23 @@ namespace MatchdayMadness.Infrastructure.Repositories
             _db = context;
         }
 
+        public async Task<List<Matches>> GetMatchesAsync()
+        {
+            return await _db.Matches
+                .Include(m => m.HomeTeam)
+                .Include(m => m.AwayTeam)
+                .ToListAsync();
+        }
+
+        public async Task<List<Matches>> GetTeamMatches(int teamid)
+        {
+            return await _db.Matches
+                .Include(m => m.HomeTeam)
+                .Include(m => m.AwayTeam)
+                .Where(m => m.HomeTeamid == teamid ||  m.AwayTeamid == teamid)
+                .ToListAsync();
+        }
+
         public IQueryable<Matches> Search(string query)
         {
             return (IQueryable<Matches>)_db.Matches

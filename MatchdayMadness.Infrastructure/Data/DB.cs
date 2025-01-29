@@ -11,7 +11,7 @@ namespace MatchdayMadness.Infrastructure.Data
         public DB(DbContextOptions<DB> context) : base(context)
         {
 
-        }
+        }   
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
@@ -21,18 +21,21 @@ namespace MatchdayMadness.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Define the relationship for HomeTeam
             modelBuilder.Entity<Matches>()
                 .HasOne(m => m.HomeTeam)
-                .WithMany()
+                .WithMany(t => t.HomeMatches) // Use HomeMatches for reverse navigation
                 .HasForeignKey(m => m.HomeTeamid)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict); // Prevent cascading deletes
 
+            // Define the relationship for AwayTeam
             modelBuilder.Entity<Matches>()
                 .HasOne(m => m.AwayTeam)
-                .WithMany()
+                .WithMany(t => t.AwayMatches) // Use AwayMatches for reverse navigation
                 .HasForeignKey(m => m.AwayTeamid)
                 .OnDelete(DeleteBehavior.Restrict);
         }
+
 
         public DbSet<Players> Players { get; set; }
         public DbSet<Teams> Teams { get; set; }

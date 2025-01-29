@@ -12,10 +12,14 @@ namespace MatchdayMadness.Domain.Models
         public DateTime Date { get; set; }
         public string Stadium { get; set; }
         public string Status { get; set; }
-     
-        public int? HomeTeamid { get; set; }
-       
-        public int? AwayTeamid { get; set; }
+
+        [DisplayName("Home Team")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public int? HomeTeamid { get; set; } = null;
+
+        [DisplayName("Away Team")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public int? AwayTeamid { get; set; } = null;
         public string Result { get; set; }
 
 
